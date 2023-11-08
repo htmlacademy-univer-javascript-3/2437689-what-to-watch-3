@@ -9,12 +9,12 @@ import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute, AuthorizationStatus } from '../consts';
 import PrivateRoute from '../private-route/private-route';
-import {PromoFilmType, Films} from '../../types/films';
-import {mainFilm, films} from '../mocks/films';
+import {PromoFilmType, FilmCardType} from '../../types/films';
+import {mainFilm, films} from '../mocks/films.ts';
 
 type AppProps = {
   promoFilm: PromoFilmType;
-  films: Films[];
+  films: FilmCardType[];
 }
 
 function App(props: AppProps): JSX.Element {
@@ -36,7 +36,7 @@ function App(props: AppProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
-                <MyListPage film={mainFilm} films={films}/>
+                <MyListPage films={films}/>
               </PrivateRoute>
             }
           />
@@ -44,7 +44,7 @@ function App(props: AppProps): JSX.Element {
             <Route index element={<MoviePage promoFilms={mainFilm} films={films}/>} />
             <Route
               path={AppRoute.AddReview}
-              element={<AddReviewPage film={mainFilm}/>}
+              element={<AddReviewPage promoFilms={mainFilm}/>}
             />
           </Route>
           <Route

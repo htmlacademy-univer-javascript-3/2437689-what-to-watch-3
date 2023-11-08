@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {PromoFilm} from './components/consts';
-import { films } from './components/mocks/films';
+import { films } from './components/mocks/films.ts';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
