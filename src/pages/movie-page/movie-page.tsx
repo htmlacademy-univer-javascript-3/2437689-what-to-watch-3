@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Fragment } from 'react';
-import './film-page.css';
+import './movie-page.css';
 import FilmList from '../../components/film-list/film-list';
 import { films } from '../../components/films/films';
 
