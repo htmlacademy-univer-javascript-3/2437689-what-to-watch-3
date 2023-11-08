@@ -1,17 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import { Fragment } from 'react';
-import FilmList from '../../components/film-list/film-list';
-import { Film } from '../../components/films/films';
+import {FilmCards} from '../../components/film-card/film-cards';
+import {Films, PromoFilmType} from '../../types/films';
 import './main-page.css';
 
 export type MainPageProps = {
-  filmCardTitle: string;
-  filmCardGenre: string;
-  filmCardYear: number;
-  films: Film[];
+  promoFilm: PromoFilmType;
+  films: Films[];
 }
 
-function MainPage({ filmCardTitle, filmCardGenre, filmCardYear, films }: MainPageProps): JSX.Element {
+function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
   return (
     <Fragment>
       <Helmet>
@@ -19,10 +17,7 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear, films }: MainPag
       </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
-          <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
-            alt="The Grand Budapest Hotel"
-          />
+          <img src={promoFilm.src} alt={promoFilm.title}/>
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -62,10 +57,10 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear, films }: MainPag
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmCardTitle}</h2>
+              <h2 className="film-card__title">{promoFilm.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmCardGenre}</span>
-                <span className="film-card__year">{filmCardYear}</span>
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -146,7 +141,7 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear, films }: MainPag
           </ul>
 
           <div className="catalog__films-list">
-            <FilmList films={films} />
+            <FilmCards filmId={promoFilm.id} films={films} />
           </div>
 
           <div className="catalog__more">

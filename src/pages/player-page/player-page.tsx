@@ -1,13 +1,12 @@
-import { Helmet } from 'react-helmet-async';
 import './player-page.css';
+type PlayerPageProps = {
+  videoUrl: string;
+};
 
-function PlayerPage(): JSX.Element {
+function PlayerPage({videoUrl}: PlayerPageProps): JSX.Element {
   return (
     <div className="player">
-      <Helmet>
-        <title>Что посмотреть. Видеоплеер</title>
-      </Helmet>
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
+      <video src={videoUrl} className="player__video" poster="img/player-poster.jpg"></video>
       <button type="button" className="player__exit">
         Exit
       </button>
