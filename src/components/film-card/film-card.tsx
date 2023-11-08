@@ -1,5 +1,5 @@
 import {FilmCardType} from '../../types/films';
-import {AppRoute} from '../consts';
+import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 import './film-card.css';
 import VideoPlayer from '../../components/video-player/video-player';

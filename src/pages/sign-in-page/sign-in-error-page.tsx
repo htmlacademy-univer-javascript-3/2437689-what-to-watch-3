@@ -1,4 +1,4 @@
-import {AppRoute} from '../../components/consts';
+import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 
 function SignInErrorPage(): JSX.Element {

@@ -6,9 +6,10 @@ import {TimeoutId} from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types'
 
 type FilmCardsProps = {
   films: FilmCardType[];
+  filmsCount: number;
 };
 
-export function FilmCards({films}: FilmCardsProps): JSX.Element {
+export function FilmCards({films, filmsCount}: FilmCardsProps): JSX.Element {
   const [activeFilm, setSelectedFilm] = useState<number | null>(null);
   let timer: undefined | TimeoutId = undefined;
 
@@ -25,7 +26,7 @@ export function FilmCards({films}: FilmCardsProps): JSX.Element {
 
   return (
     <div className="catalog__films-list">
-      {films.map((film) => (
+      {films.slice(0, filmsCount).map((film) => (
         <FilmCard
           key={film.id}
           promoFilm={film}

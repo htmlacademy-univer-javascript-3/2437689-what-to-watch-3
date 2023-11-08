@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Fragment } from 'react';
 import {FilmCards} from '../../components/film-card/film-cards';
 import {FilmCardType, PromoFilmType} from '../../types/films';
+import {ShowFilmsCount} from '../../utils/consts.ts';
 import './main-page.css';
 
 export type MainPageProps = {
@@ -141,7 +142,7 @@ function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            <FilmCards films={films} />
+            <FilmCards films={films} filmsCount={ShowFilmsCount}/>
           </div>
 
           <div className="catalog__more">
