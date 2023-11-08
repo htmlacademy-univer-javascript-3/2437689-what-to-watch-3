@@ -1,14 +1,22 @@
-import FilmCard from './film_card.tsx';
+import { Helmet } from 'react-helmet-async';
+import { Fragment } from 'react';
+import FilmList from '../../components/film-list/film-list';
+import { Film } from '../../components/films/films';
+import './main-page.css';
 
-type MainScreenProps = {
+export type MainPageProps = {
   filmCardTitle: string;
   filmCardGenre: string;
   filmCardYear: number;
+  films: Film[];
 }
 
-function MainPage({ filmCardTitle, filmCardGenre, filmCardYear }: MainScreenProps): JSX.Element {
+function MainPage({ filmCardTitle, filmCardGenre, filmCardYear, films }: MainPageProps): JSX.Element {
   return (
-    <>
+    <Fragment>
+      <Helmet>
+        <title>Что посмотреть. Главная</title>
+      </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
           <img
@@ -31,10 +39,9 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear }: MainScreenProp
             <li className="user-block__item">
               <div className="user-block__avatar">
                 <img
+                  className="user-block__image-item"
                   src="img/avatar.jpg"
                   alt="User avatar"
-                  width={63}
-                  height={63}
                 />
               </div>
             </li>
@@ -48,10 +55,9 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear }: MainScreenProp
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
+                className="film-card__poster--image-item"
                 src="img/the-grand-budapest-hotel-poster.jpg"
                 alt="The Grand Budapest Hotel poster"
-                width={218}
-                height={327}
               />
             </div>
 
@@ -64,13 +70,13 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear }: MainScreenProp
 
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width={19} height={19}>
+                  <svg className="btn--play__icon-item" viewBox="0 0 19 19">
                     <use xlinkHref="#play-s"/>
                   </svg>
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
+                  <svg className="btn--list__icon-item" viewBox="0 0 19 20">
                     <use xlinkHref="#add"/>
                   </svg>
                   <span>My list</span>
@@ -140,26 +146,7 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear }: MainScreenProp
           </ul>
 
           <div className="catalog__films-list">
-            <FilmCard imgURL="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" imgDesctiption="Fantastic Beasts: The Crimes of Grindelwald"/>
-            <FilmCard imgURL="img/bohemian-rhapsody.jpg" imgDesctiption="Bohemian Rhapsody"/>
-            <FilmCard imgURL="img/macbeth.jpg" imgDesctiption="Macbeth"/>
-            <FilmCard imgURL="img/aviator.jpg" imgDesctiption="Aviator"/>
-            <FilmCard imgURL="img/we-need-to-talk-about-kevin.jpg" imgDesctiption="We need to talk about Kevin"/>
-            <FilmCard imgURL="img/what-we-do-in-the-shadows.jpg" imgDesctiption="What We Do in the Shadows"/>
-            <FilmCard imgURL="img/revenant.jpg" imgDesctiption="Revenant"/>
-            <FilmCard imgURL="img/johnny-english.jpg" imgDesctiption="Johnny English"/>
-            <FilmCard imgURL="img/shutter-island.jpg" imgDesctiption="Shutter Island"/>
-            <FilmCard imgURL="img/pulp-fiction.jpg" imgDesctiption="Pulp Fiction"/>
-            <FilmCard imgURL="img/no-country-for-old-men.jpg" imgDesctiption="No Country for Old Men"/>
-            <FilmCard imgURL="img/snatch.jpg" imgDesctiption="Snatch"/>
-            <FilmCard imgURL="img/moonrise-kingdom.jpg" imgDesctiption="Moonrise Kingdom"/>
-            <FilmCard imgURL="img/seven-years-in-tibet.jpg" imgDesctiption="Seven Years in Tibet"/>
-            <FilmCard imgURL="img/midnight-special.jpg" imgDesctiption="Midnight Special"/>
-            <FilmCard imgURL="img/war-of-the-worlds.jpg" imgDesctiption="War of the Worlds"/>
-            <FilmCard imgURL="img/dardjeeling-limited.jpg" imgDesctiption="Dardjeeling Limited"/>
-            <FilmCard imgURL="img/orlando.jpg" imgDesctiption="Orlando"/>
-            <FilmCard imgURL="img/mindhunter.jpg" imgDesctiption="Mindhunter"/>
-            <FilmCard imgURL="img/midnight-special.jpg" imgDesctiption="Midnight Special"/>
+            <FilmList films={films} />
           </div>
 
           <div className="catalog__more">
@@ -183,7 +170,7 @@ function MainPage({ filmCardTitle, filmCardGenre, filmCardYear }: MainScreenProp
           </div>
         </footer>
       </div>
-    </>
+    </Fragment>
   );
 }
 
