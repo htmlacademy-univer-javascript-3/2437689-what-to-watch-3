@@ -1,22 +1,23 @@
+import './film-card.css';
+
 type FilmCardProps = {
-  imgURL: string;
-  imgDesctiption: string;
+  poster: string;
+  name: string;
 }
 
-function FilmCard({ imgURL, imgDesctiption }: FilmCardProps): JSX.Element {
+function FilmCard({ poster, name }: FilmCardProps): JSX.Element {
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         <img
-          src={imgURL}
-          alt={imgDesctiption}
-          width={280}
-          height={175}
+          className="small-film-card__image-item"
+          src={poster}
+          alt={name}
         />
       </div>
       <h3 className="small-film-card__title">
         <a className="small-film-card__link" href="film-page.html">
-          {imgDesctiption}
+          {name}
         </a>
       </h3>
     </article>

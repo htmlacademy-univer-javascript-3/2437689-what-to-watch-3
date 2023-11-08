@@ -1,6 +1,12 @@
+import { Helmet } from 'react-helmet-async';
+import './add-review-page.css';
+
 function AddReviewPage(): JSX.Element {
   return (
     <section className="film-card film-card--full">
+      <Helmet>
+        <title>Что посмотреть. Оставьте отзыв!</title>
+      </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img
@@ -33,10 +39,9 @@ function AddReviewPage(): JSX.Element {
             <li className="user-block__item">
               <div className="user-block__avatar">
                 <img
+                  className="user-block__image-item"
                   src="img/avatar.jpg"
                   alt="User avatar"
-                  width={63}
-                  height={63}
                 />
               </div>
             </li>
@@ -47,10 +52,9 @@ function AddReviewPage(): JSX.Element {
         </header>
         <div className="film-card__poster film-card__poster--small">
           <img
+            className="film-card__poster--image-item"
             src="img/the-grand-budapest-hotel-poster.jpg"
             alt="The Grand Budapest Hotel poster"
-            width={218}
-            height={327}
           />
         </div>
       </div>

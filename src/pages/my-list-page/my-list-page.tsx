@@ -1,6 +1,12 @@
+import { Helmet } from 'react-helmet-async';
+import './my-list-page.css';
+
 function MyListPage(): JSX.Element {
   return (
     <div className="user-page">
+      <Helmet>
+        <title>Что посмотреть. Мой список фильмов</title>
+      </Helmet>
       <header className="page-header user-page__head">
         <div className="logo">
           <a href="main.html" className="logo__link">
@@ -15,7 +21,7 @@ function MyListPage(): JSX.Element {
         <ul className="user-block">
           <li className="user-block__item">
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width={63} height={63} />
+              <img className="user-block__image-item" src="img/avatar.jpg" alt="User avatar" />
             </div>
           </li>
           <li className="user-block__item">
@@ -29,10 +35,9 @@ function MyListPage(): JSX.Element {
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
               <img
+                className="small-film-card__image-item"
                 src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
                 alt="Fantastic Beasts: The Crimes of Grindelwald"
-                width={280}
-                height={175}
               />
             </div>
             <h3 className="small-film-card__title">
@@ -44,10 +49,9 @@ function MyListPage(): JSX.Element {
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
               <img
+                className="small-film-card__image-item"
                 src="img/bohemian-rhapsody.jpg"
                 alt="Bohemian Rhapsody"
-                width={280}
-                height={175}
               />
             </div>
             <h3 className="small-film-card__title">
@@ -58,7 +62,7 @@ function MyListPage(): JSX.Element {
           </article>
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/macbeth.jpg" alt="Macbeth" width={280} height={175} />
+              <img className="small-film-card__image-item" src="img/macbeth.jpg" alt="Macbeth" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">
@@ -68,7 +72,7 @@ function MyListPage(): JSX.Element {
           </article>
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/aviator.jpg" alt="Aviator" width={280} height={175} />
+              <img className="small-film-card__image-item" src="img/aviator.jpg" alt="Aviator" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">
@@ -79,10 +83,9 @@ function MyListPage(): JSX.Element {
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
               <img
+                className="small-film-card__image-item"
                 src="img/we-need-to-talk-about-kevin.jpg"
                 alt="We need to talk about Kevin"
-                width={280}
-                height={175}
               />
             </div>
             <h3 className="small-film-card__title">
@@ -94,10 +97,9 @@ function MyListPage(): JSX.Element {
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
               <img
+                className="small-film-card__image-item"
                 src="img/what-we-do-in-the-shadows.jpg"
                 alt="What We Do in the Shadows"
-                width={280}
-                height={175}
               />
             </div>
             <h3 className="small-film-card__title">
@@ -108,7 +110,7 @@ function MyListPage(): JSX.Element {
           </article>
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/revenant.jpg" alt="Revenant" width={280} height={175} />
+              <img className="small-film-card__image-item" src="img/revenant.jpg" alt="Revenant" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">
@@ -119,10 +121,9 @@ function MyListPage(): JSX.Element {
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
               <img
+                className="small-film-card__image-item"
                 src="img/johnny-english.jpg"
                 alt="Johnny English"
-                width={280}
-                height={175}
               />
             </div>
             <h3 className="small-film-card__title">
@@ -134,10 +135,9 @@ function MyListPage(): JSX.Element {
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
               <img
+                className="small-film-card__image-item"
                 src="img/shutter-island.jpg"
                 alt="Shutter Island"
-                width={280}
-                height={175}
               />
             </div>
             <h3 className="small-film-card__title">
