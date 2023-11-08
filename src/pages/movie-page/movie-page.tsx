@@ -1,11 +1,11 @@
-import {Films} from '../../types/films';
+import {FilmCardType} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
 import {AppRoute} from '../../components/consts';
 import {Link} from 'react-router-dom';
 
 type FilmsScreenProps = {
-  promoFilms: Films;
-  films: Films[];
+  promoFilms: FilmCardType;
+  films: FilmCardType[];
 }
 
 function MoviePage({promoFilms, films}: FilmsScreenProps): JSX.Element {
@@ -117,7 +117,7 @@ function MoviePage({promoFilms, films}: FilmsScreenProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmCards filmId={promoFilms.id} films={films} />
+          <FilmCards films={films} />
         </section>
         <footer className="page-footer">
           <div className="logo">
