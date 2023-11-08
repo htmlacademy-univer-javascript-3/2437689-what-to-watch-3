@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {FilmCardType} from '../../types/films';
 import {AddReviewForm} from './add-review-form';
-import {AppRoute} from '../../components/consts';
+import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 
 type AddReviewPageProps = {

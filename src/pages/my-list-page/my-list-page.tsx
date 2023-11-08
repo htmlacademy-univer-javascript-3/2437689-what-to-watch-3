@@ -1,7 +1,7 @@
 import './my-list-page.css';
 import {FilmCardType} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
-import {AppRoute} from '../../components/consts';
+import {AppRoute, ShowFilmsCount} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 
 type MyListPageProps = {
@@ -35,7 +35,7 @@ function MyListPage({films}: MyListPageProps): JSX.Element {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmCards films={films} />
+        <FilmCards films={films} filmsCount={ShowFilmsCount}/>
       </section>
       <footer className="page-footer">
         <div className="logo">

@@ -7,7 +7,7 @@ import MoviePage from '../../pages/movie-page/movie-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { AppRoute, AuthorizationStatus } from '../consts';
+import { AppRoute, AuthorizationStatus } from '../../utils/consts.ts';
 import PrivateRoute from '../private-route/private-route';
 import {PromoFilmType, FilmCardType} from '../../types/films';
 import {mainFilm, films} from '../mocks/films.ts';

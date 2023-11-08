@@ -1,14 +1,17 @@
 import {FilmCardType} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
-import {AppRoute} from '../../components/consts';
+import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
+import Tabs from '../../components/tabs/tabs';
+import {MoreLikeFilmsCount} from '../../utils/consts.ts';
 
-type FilmsScreenProps = {
+
+type MoviePageProps = {
   promoFilms: FilmCardType;
   films: FilmCardType[];
 }
 
-function MoviePage({promoFilms, films}: FilmsScreenProps): JSX.Element {
+function MoviePage({promoFilms, films}: MoviePageProps): JSX.Element {
   return (
     <>
       <section className="film-card film-card--full">
@@ -78,46 +81,14 @@ function MoviePage({promoFilms, films}: FilmsScreenProps): JSX.Element {
                 alt={`${promoFilms.title} poster`}
               />
             </div>
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">
-                      Overview
-                    </a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">
-                      Details
-                    </a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">
-                      Reviews
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-              <div className="film-rating">
-                <div className="film-rating__score">{promoFilms.ratingScore}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{promoFilms.ratingLevel}</span>
-                  <span className="film-rating__count">{promoFilms.ratingCount} ratings</span>
-                </p>
-              </div>
-              <div className="film-card__text">
-                {promoFilms.description}
-                <p className="film-card__director"><strong>Director: {promoFilms.director}</strong></p>
-                <p className="film-card__starring"><strong>Starring: {promoFilms.starring}</strong></p>
-              </div>
-            </div>
+            <Tabs filmCard={promoFilms}/>
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmCards films={films} />
+          <FilmCards films={films} filmsCount={MoreLikeFilmsCount}/>
         </section>
         <footer className="page-footer">
           <div className="logo">

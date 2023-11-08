@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {PromoFilm} from './components/consts';
+import {PromoFilm} from './utils/consts.ts';
 import { films } from './components/mocks/films.ts';
 
 const root = ReactDOM.createRoot(
