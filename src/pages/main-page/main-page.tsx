@@ -5,6 +5,7 @@ import './main-page.css';
 import {useAppSelector} from '../../components/hooks/hooks.ts';
 import {GenresList} from '../../components/genres/genre-list.tsx';
 import {GetSrcFilmImage} from '../../utils/functions.ts';
+import ShowMoreButton from '../../components/show-more-button/show-more-button.tsx';
 
 export type MainPageProps = {
   mainFilm: Film;
@@ -12,6 +13,7 @@ export type MainPageProps = {
 
 function MainPage({ mainFilm }: MainPageProps): JSX.Element {
   const films = useAppSelector((state) => state.films);
+  const filmsCardCount = useAppSelector((state) => state.filmsCardCount);
   return (
     <>
       <section className="film-card">
@@ -98,13 +100,10 @@ function MainPage({ mainFilm }: MainPageProps): JSX.Element {
             <GenresList />
           </ul>
 
-          <FilmCards mainFilmId={mainFilm.id} films={films} />
+          <FilmCards mainFilmId={mainFilm.id} films={films.slice(0, filmsCardCount || films.length)} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          {filmsCardCount < films.length && <ShowMoreButton/>}
+
         </section>
 
         <footer className="page-footer">
