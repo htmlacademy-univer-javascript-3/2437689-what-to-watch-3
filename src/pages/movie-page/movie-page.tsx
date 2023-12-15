@@ -1,30 +1,35 @@
-import {Film} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
-import {AppRoute, FilmImage, Genres} from '../../utils/consts.ts';
+import {AppRoute} from '../../utils/consts.ts';
 import {Link, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
-import {changeGenre, getGenreFilms} from '../../store/actions.ts';
-import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
-import {GetSrcFilmImage} from '../../utils/functions.ts';
+import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
+import { fetchFilmAction } from '../../services/api-actions';
+import { useEffect } from 'react';
+import { NotFoundPage } from '../not-found-page/not-found-page';
+import { ReturnToMainPage } from '../../utils/functions';
+import './movie-page.css';
 
-type MoviePageProps = {
-  films: Film[];
-};
-
-function MoviePage({ films }: MoviePageProps): JSX.Element {
-  const params = useParams();
-  const mainFilm = films[parseInt(params.id || '1', 10) - 1];
-  const filmsLikeMain = useAppSelector((state) => state.films);
+function MoviePage(): JSX.Element {
+  const { id } = useParams();
   const dispatch = useAppDispatch();
+  const mainFilm = useAppSelector((state) => state.film);
+  const filmsLikeMain = useAppSelector((state) => state.films);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmAction(id));
+    }
+  }, [dispatch, id]);
+
+  if (!mainFilm) {
+    return <NotFoundPage />;
+  }
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img
-              src={GetSrcFilmImage(mainFilm.title, FilmImage.BgImage)}
-              alt={mainFilm.title}
-            />
+            <img src={mainFilm?.backgroundImage} alt={mainFilm?.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -35,8 +40,7 @@ function MoviePage({ films }: MoviePageProps): JSX.Element {
                 to={AppRoute.Main}
                 className="logo__link"
                 onClick={() => {
-                  dispatch(changeGenre({ genre: Genres.All }));
-                  dispatch(getGenreFilms({ genre: Genres.All }));
+                  ReturnToMainPage();
                 }}
               >
                 <span className="logo__letter logo__letter--1">W</span>
@@ -63,10 +67,10 @@ function MoviePage({ films }: MoviePageProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{mainFilm.title}</h2>
+              <h2 className="film-card__title">{mainFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{mainFilm.genre}</span>
-                <span className="film-card__year">{mainFilm.year}</span>
+                <span className="film-card__genre">{mainFilm?.genre}</span>
+                <span className="film-card__year">{mainFilm?.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -102,8 +106,8 @@ function MoviePage({ films }: MoviePageProps): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img
                 className="film-card__poster--image-item"
-                src={GetSrcFilmImage(mainFilm.title, FilmImage.Poster)}
-                alt={mainFilm.title}
+                src={mainFilm?.backgroundImage}
+                alt={mainFilm?.name}
               />
             </div>
 
@@ -116,15 +120,14 @@ function MoviePage({ films }: MoviePageProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmCards mainFilmId={mainFilm.id} films={filmsLikeMain} />
+          <FilmCards films={filmsLikeMain} />
         </section>
 
         <footer className="page-footer">
           <div
             className="logo"
             onClick={() => {
-              dispatch(changeGenre({ genre: Genres.All }));
-              dispatch(getGenreFilms({ genre: Genres.All }));
+              ReturnToMainPage();
             }}
           >
             <Link to={AppRoute.Main} className="logo__link logo__link--light">

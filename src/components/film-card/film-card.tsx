@@ -1,21 +1,17 @@
-import {Film} from '../../types/films';
-import {FilmImage, hoverFilmCardTime} from '../../utils/consts.ts';
+import {FilmCardType} from '../../types/films';
+import {hoverFilmCardTime} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 import './film-card.css';
 import {VideoPlayer} from '../video-player/video-player.tsx';
-import {getGenreFilms} from '../../store/actions.ts';
-import {useAppDispatch} from '../hooks/hooks.ts';
 import {useEffect, useState} from 'react';
-import {GetSrcFilmImage} from '../../utils/functions.ts';
 
 type FilmCardProps = {
-  film: Film;
+  film: FilmCardType;
 };
 
 export function FilmCard({ film }: FilmCardProps): JSX.Element {
   const [needPlayVideo, setNeedPlayVideo] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const dispatch = useAppDispatch();
   useEffect(() => {
     let isMouseLeave = false;
     if (needPlayVideo) {
@@ -43,17 +39,14 @@ export function FilmCard({ film }: FilmCardProps): JSX.Element {
       to={`/films/${film.id}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={() => {
-        dispatch(getGenreFilms({ genre: film.genre }));
-      }}
     >
       <VideoPlayer
-        src={film.trailer}
-        poster={GetSrcFilmImage(film.title, FilmImage.SmallCard)}
+        src={film.previewVideoLink}
+        poster={film.previewImage}
         muted
         isPlaying={isPlaying}
       />
-      {!isPlaying && <h3 className="small-film-card__title">{film.title}</h3>}
+      {!isPlaying && <h3 className="small-film-card__title">{film.name}</h3>}
     </Link>
   );
 }

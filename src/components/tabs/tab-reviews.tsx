@@ -1,30 +1,27 @@
-import {Film} from '../../types/films';
+import {FilmType} from '../../types/films';
+import {Comment} from '../../types/films';
+import UserReview from './user-review';
 
 type TabReviewsProps = {
-  film: Film;
+  film: FilmType;
 };
 
 export function TabReviews({ film }: TabReviewsProps): JSX.Element {
+  const comments: Comment[] = [];
+  const reviewsCount = comments.length;
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {film.rewievs.map((review) => (
-          <div className="review" key="0">
-            <blockquote className="review__quote">
-              <p className="review__text">{review.comment}</p>
-
-              <footer className="review__details">
-                <cite className="review__author">{review.author}</cite>
-                <time className="review__date" dateTime="2015-11-18">
-                  {review.date}
-                </time>
-              </footer>
-            </blockquote>
-
-            <div className="review__rating">{review.rating}</div>
-          </div>
-
+        {comments.slice(0, Math.trunc(reviewsCount / 2)).map((review) => (
+          <UserReview key={film.id} review={review} />
         ))}
+      </div>
+      <div className="film-card__reviews-col">
+        {comments
+          .slice(Math.trunc(reviewsCount / 2), reviewsCount)
+          .map((review) => (
+            <UserReview key={film.id} review={review} />
+          ))}
       </div>
     </div>
   );
