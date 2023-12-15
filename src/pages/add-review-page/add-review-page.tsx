@@ -1,13 +1,13 @@
 import {useState} from 'react';
-import {Film} from '../../types/films';
+import {PromoFilmType} from '../../types/films';
 import {AddReviewForm} from './add-review-form';
-import {AppRoute, FilmImage} from '../../utils/consts.ts';
+import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
-import {GetSrcFilmImage} from '../../utils/functions.ts';
 import {Helmet} from 'react-helmet-async';
+import './add-review-page.css';
 
 type AddReviewPageProps = {
-  film: Film;
+  film: PromoFilmType;
 };
 
 function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
@@ -24,10 +24,7 @@ function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
       </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img
-            src={GetSrcFilmImage(film.title, FilmImage.BgImage)}
-            alt={film.title}
-          />
+          <img src={film.backgroundImage} alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -45,7 +42,7 @@ function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <Link to={AppRoute.Film} className="readcrumbs__link">
-                  {film.title}
+                  {film.name}
                 </Link>
               </li>
               <li className="breadcrumbs__item">
@@ -73,8 +70,8 @@ function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
         <div className="film-card__poster film-card__poster--small">
           <img
             className="film-card__poster--image-item"
-            src={GetSrcFilmImage(film.title, FilmImage.Poster)}
-            alt={`${film.title} poster`}
+            src={film.posterImage}
+            alt={`${film.name} poster`}
           />
         </div>
       </div>

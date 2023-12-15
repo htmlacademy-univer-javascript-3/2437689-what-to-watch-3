@@ -1,14 +1,14 @@
 import './my-list-page.css';
-import {Film} from '../../types/films';
+import {FilmCardType} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
 import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 
 type MyListPageProps = {
-  mainFilm: Film;
-  films: Film[];
+  films: FilmCardType[];
 };
-function MyListPage({ mainFilm, films }: MyListPageProps): JSX.Element {
+
+function MyListPage({ films }: MyListPageProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -42,7 +42,7 @@ function MyListPage({ mainFilm, films }: MyListPageProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmCards mainFilmId={mainFilm.id} films={films} />
+        <FilmCards films={films} />
       </section>
 
       <footer className="page-footer">

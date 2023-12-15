@@ -1,4 +1,5 @@
 import './player-page.css';
+
 type PlayerPageProps = {
   videoUrl: string;
 };

@@ -1,37 +1,86 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {changeGenre, getGenreFilms, setFilmCardCount} from './actions.ts';
+import {
+  loadFilm,
+  loadAllFilms,
+  loadPromoFilm,
+  setCount,
+  setGenre,
+  setDataLoadingStatus,
+  setFilmsDisplayed,
+  setFilmByGenre
+} from './actions.ts';
 import {Genres, visibleFilmCardCount} from '../utils/consts.ts';
-import { films } from '../components/mocks/films.ts';
+import {FilmCardType, FilmType, PromoFilmType} from '../types/films.ts';
 
-const initialState = {
+type InitialState = {
+  genre: Genres;
+  films: FilmCardType[];
+  filmsDisplayed: FilmCardType[];
+  filmsByGenre: FilmCardType[];
+  filmsCardCount: number;
+  error: string | null;
+  isFilmsDataLoading: boolean;
+  promoFilm: PromoFilmType;
+  film: FilmType | null;
+};
+
+const initialState: InitialState = {
   genre: Genres.All,
-  films,
+  films: [],
+  filmsDisplayed: [],
+  filmsByGenre: [],
   filmsCardCount: visibleFilmCardCount,
+  error: null,
+  isFilmsDataLoading: false,
+  promoFilm: {
+    id: '',
+    name: '',
+    posterImage: '',
+    backgroundImage: '',
+    videoLink: '',
+    genre: Genres.All,
+    released: -1,
+    isFavorite: false,
+  },
+  film: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeGenre, (state, action) => {
+    .addCase(setCount, (state, action) => {
+      const { count } = action.payload;
+      state.filmsCardCount = Math.min(state.filmsByGenre.length, count);
+    })
+    .addCase(setFilmByGenre, (state, action) => {
       const { genre } = action.payload;
       state.genre = genre;
-      state.filmsCardCount = visibleFilmCardCount;
     })
-    .addCase(getGenreFilms, (state, action) => {
-      const { genre } = action.payload;
-      switch (genre) {
-        case Genres.All:
-          state.films = films;
-          break;
-        default:
-          state.films = films.filter((film) => film.genre === genre);
-          break;
+    .addCase(setGenre, (state) => {
+      if (state.genre === Genres.All) {
+        state.filmsByGenre = state.films;
+      } else {
+        state.filmsByGenre = state.films.filter(
+          (film) => film.genre === state.genre
+        );
       }
     })
-    .addCase(setFilmCardCount, (state) => {
-      state.filmsCardCount +=
-        state.films.length > state.filmsCardCount + visibleFilmCardCount
-          ? state.filmsCardCount + visibleFilmCardCount
-          : state.films.length;
+    .addCase(setFilmsDisplayed, (state) => {
+      state.filmsDisplayed = state.filmsByGenre.slice(0, state.filmsCardCount);
+    })
+    .addCase(loadAllFilms, (state, action) => {
+      const films = action.payload;
+      state.films = films;
+      state.filmsByGenre = films;
+      state.filmsDisplayed = films.slice(0, Math.min(8, films.length));
+    })
+    .addCase(setDataLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(loadFilm, (state, action) => {
+      state.film = action.payload;
+    })
+    .addCase(loadPromoFilm, (state, action) => {
+      state.promoFilm = action.payload;
     });
 });
 

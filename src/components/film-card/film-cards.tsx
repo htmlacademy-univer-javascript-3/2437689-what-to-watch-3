@@ -1,19 +1,14 @@
 import {FilmCard} from './film-card';
-import {Film} from '../../types/films';
+import {FilmCardType} from '../../types/films';
 
 type FilmCardsProps = {
-  mainFilmId: number;
-  films: Film[];
+  films: FilmCardType[];
 };
 
-export function FilmCards({ mainFilmId, films}: FilmCardsProps): JSX.Element {
+export function FilmCards({ films }: FilmCardsProps): JSX.Element {
   return (
     <div className="catalog__films-list">
-      {films.map((film) => {
-        if (film.id !== mainFilmId) {
-          return <FilmCard key={film.id} film={film}/>;
-        }
-      })}
+      {films.map((film) => <FilmCard key={film.id} film={film} />)}
     </div>
   );
 }

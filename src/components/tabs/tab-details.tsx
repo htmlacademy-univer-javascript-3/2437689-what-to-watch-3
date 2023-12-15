@@ -1,7 +1,7 @@
-import {Film} from '../../types/films';
+import {FilmType} from '../../types/films';
 
 type TabDetailsProps = {
-  film: Film;
+  film: FilmType;
 };
 
 export function TabDetails({ film }: TabDetailsProps): JSX.Element {
@@ -10,9 +10,7 @@ export function TabDetails({ film }: TabDetailsProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Director</strong>
-          <span className="film-card__details-value">
-            {film.director.join(',')}
-          </span>
+          <span className="film-card__details-value">{film.director}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
@@ -29,7 +27,7 @@ export function TabDetails({ film }: TabDetailsProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{film.time}</span>
+          <span className="film-card__details-value">{film.runTime}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>
@@ -37,7 +35,7 @@ export function TabDetails({ film }: TabDetailsProps): JSX.Element {
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Released</strong>
-          <span className="film-card__details-value">{film.year}</span>
+          <span className="film-card__details-value">{film.released}</span>
         </p>
       </div>
     </div>

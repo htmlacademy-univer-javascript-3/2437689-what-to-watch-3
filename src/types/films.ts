@@ -1,23 +1,46 @@
 import { Genres } from '../utils/consts.ts';
 
-export type Film = {
-  id: number;
+export type FilmType = {
+  id: string;
+  name: string;
+  posterImage: string;
+  backgroundImage: string;
+  backgroundColor: string;
+  videoLink: string;
+  description: string;
+  rating: number;
+  scoresCount: number;
+  director: string;
+  starring: [string];
+  runTime: number;
   genre: Genres;
-  year: string;
-  title: string;
-  text: string;
-  director: string[];
-  starring: string[];
-  trailer: string;
-  score: number;
-  level: string;
-  time: string;
-  rewievs: ReviewType[];
+  released: number;
+  isFavorite: boolean;
 };
 
-export type ReviewType = {
-  author: string;
-  rating: number;
-  comment: string;
+export type FilmCardType = {
+  id: string;
+  name: string;
+  previewImage: string;
+  previewVideoLink: string;
+  genre: Genres;
+};
+
+export type PromoFilmType = {
+  id: string;
+  name: string;
+  posterImage: string;
+  backgroundImage: string;
+  videoLink: string;
+  genre: Genres;
+  released: number;
+  isFavorite: boolean;
+};
+
+export type Comment = {
+  id: string;
   date: string;
+  user: string;
+  comment: string;
+  rating: number;
 };

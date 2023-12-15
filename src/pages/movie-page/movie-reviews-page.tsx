@@ -1,6 +1,6 @@
 import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
-
+import './movie-page.css';
 
 function MovieReviewsPage(): JSX.Element {
   return (

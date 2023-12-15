@@ -1,24 +1,33 @@
-export const idFirstFilm = 0;
 export const hoverFilmCardTime = 1000;
 export const visibleFilmCardCount = 8;
 
-export const Setting = {
-  filmCardTitle: 'The Grand Budapest Hotel',
-  filmCardGenre: 'Drama',
-  filmCardYear: 2014
+export const APIRoute = {
+  Films: () => '/films',
+  Film: (filmId: string) => `/films/${filmId}`,
+  Similar: (filmId: string) => `/films/${filmId}/similar`,
+  Promo: () => '/promo',
+  Favorite: () => '/favorite',
+  Comments: (filmId: string) => `/comments/${filmId}`,
+  SignIn: () => '/login',
+  Logout: () => '/logout',
+  AddReview: () => '/films/:id/review',
+  MyList: () => '/mylist',
 };
 
 export enum Genres {
-  All = 'All Genres',
+  All = 'All genres',
+  Drama = 'Drama',
+  Action = 'Action',
   Comedy = 'Comedy',
   Crime = 'Crime',
+  Fantasy = 'Fantasy',
   Documentary = 'Documentary',
-  Drama = 'Drama',
   Horror = 'Horror',
   KidsFamily = 'Kids & Family',
   Romance = 'Romance',
+  Adventure = 'Adventure',
+  Thriller = 'Thriller',
   SciFi = 'Sci-Fi',
-  Thriller = 'Thriller'
 }
 
 export enum AuthorizationStatus {
@@ -42,14 +51,21 @@ export enum TabType {
   Reviews = 'Reviews',
 }
 
-export enum FilmImage {
-  BgImage,
-  Poster,
-  SmallCard,
-}
-
 export const tabTypes: TabType[] = [
   TabType.Overview,
   TabType.Details,
   TabType.Reviews,
+];
+
+export const genres: Genres[] = [
+  Genres.All,
+  Genres.Comedy,
+  Genres.Crime,
+  Genres.Adventure,
+  Genres.Drama,
+  Genres.Action,
+  Genres.Fantasy,
+  Genres.Romance,
+  Genres.SciFi,
+  Genres.Thriller,
 ];

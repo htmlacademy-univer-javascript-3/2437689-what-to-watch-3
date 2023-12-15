@@ -1,10 +1,15 @@
 import { useAppDispatch } from '../hooks/hooks';
-import {setFilmCardCount} from '../../store/actions.ts';
+import {setCount, setFilmsDisplayed} from '../../store/actions.ts';
 
-export default function ShowMoreButton(): JSX.Element {
+export type ShowMoreButtonProps = {
+  count: number;
+}
+
+export default function ShowMoreButton({ count }: ShowMoreButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
   const handleShowMoreClick = () => {
-    dispatch(setFilmCardCount());
+    dispatch(setCount({ count: count + 8 }));
+    dispatch(setFilmsDisplayed());
   };
 
   return (

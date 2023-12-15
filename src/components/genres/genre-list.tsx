@@ -1,31 +1,25 @@
-import {useAppSelector, useAppDispatch} from '../hooks/hooks.ts';
-import {Genres} from '../../utils/consts.ts';
-import {films} from '../mocks/films.ts';
-import {changeGenre, getGenreFilms} from '../../store/actions.ts';
+import {useAppDispatch} from '../hooks/hooks.ts';
+import {Genres, genres} from '../../utils/consts.ts';
+import {
+  setCount,
+  setGenre,
+  setFilmsDisplayed,
+  setFilmByGenre
+} from '../../store/actions.ts';
+import GenreItem from './genre-item.tsx';
 
 export function GenresList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const genre = useAppSelector((state) => state.genre);
-  const genres: Genres[] = [Genres.All, ...new Set(films.map((x) => x.genre))];
-
+  const handleGenreClick = (genre: Genres) => {
+    dispatch(setFilmByGenre({ genre: genre }));
+    dispatch(setGenre());
+    dispatch(setCount({ count: 8 }));
+    dispatch(setFilmsDisplayed());
+  };
   return (
     <ul className="catalog__genres-list">
       {genres.map((filmGenre) => (
-        <li
-          className={`catalog__genres-item
-                ${(filmGenre === genre && 'catalog__genres-item--active') || ''}`}
-          key={filmGenre}
-        >
-          <div
-            className="catalog__genres-link"
-            onClick={() => {
-              dispatch(changeGenre({ genre: filmGenre }));
-              dispatch(getGenreFilms({ genre: filmGenre }));
-            }}
-          >
-            {filmGenre}
-          </div>
-        </li>
+        <GenreItem genre={filmGenre} onClick={handleGenreClick} key={filmGenre}/>
       ))}
     </ul>
   );
