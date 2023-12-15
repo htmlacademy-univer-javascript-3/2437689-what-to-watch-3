@@ -1,27 +1,29 @@
-import { Helmet } from 'react-helmet-async';
-import { Fragment } from 'react';
 import {FilmCards} from '../../components/film-card/film-cards';
-import {FilmCardType, PromoFilmType} from '../../types/films';
-import {ShowFilmsCount} from '../../utils/consts.ts';
+import {Film} from '../../types/films';
+import {FilmImage} from '../../utils/consts.ts';
 import './main-page.css';
+import {useAppSelector} from '../../components/hooks/hooks.ts';
+import {GenresList} from '../../components/genres/genre-list.tsx';
+import {GetSrcFilmImage} from '../../utils/functions.ts';
 
 export type MainPageProps = {
-  promoFilm: PromoFilmType;
-  films: FilmCardType[];
+  mainFilm: Film;
 }
 
-function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
+function MainPage({ mainFilm }: MainPageProps): JSX.Element {
+  const films = useAppSelector((state) => state.films);
   return (
-    <Fragment>
-      <Helmet>
-        <title>Что посмотреть. Главная</title>
-      </Helmet>
+    <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promoFilm.src} alt={promoFilm.title}/>
+          <img
+            src={GetSrcFilmImage(mainFilm.title, FilmImage.BgImage)}
+            alt={mainFilm.title}
+          />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
+
         <header className="page-header film-card__head">
           <div className="logo">
             <a className="logo__link">
@@ -52,28 +54,34 @@ function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
             <div className="film-card__poster">
               <img
                 className="film-card__poster--image-item"
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={GetSrcFilmImage(mainFilm.title, FilmImage.Poster)}
+                alt={`${mainFilm.title} poster`}
               />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.title}</h2>
+              <h2 className="film-card__title">{mainFilm.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.year}</span>
+                <span className="film-card__genre">{mainFilm.title}</span>
+                <span className="film-card__year">{mainFilm.year}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button
+                  className="btn btn--play film-card__button"
+                  type="button"
+                >
                   <svg className="btn--play__icon-item" viewBox="0 0 19 19">
-                    <use xlinkHref="#play-s"/>
+                    <use href="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button
+                  className="btn btn--list film-card__button"
+                  type="button"
+                >
                   <svg className="btn--list__icon-item" viewBox="0 0 19 20">
-                    <use xlinkHref="#add"/>
+                    <use href="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
@@ -83,67 +91,14 @@ function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
           </div>
         </div>
       </section>
-
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">
-                All genres
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Comedies
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Crime
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Documentary
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Dramas
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Horror
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Kids &amp; Family
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Romance
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Sci-Fi
-              </a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
-                Thrillers
-              </a>
-            </li>
+            <GenresList />
           </ul>
 
-          <div className="catalog__films-list">
-            <FilmCards films={films} filmsCount={ShowFilmsCount}/>
-          </div>
+          <FilmCards mainFilmId={mainFilm.id} films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">
@@ -166,7 +121,7 @@ function MainPage({promoFilm, films}: MainPageProps): JSX.Element {
           </div>
         </footer>
       </div>
-    </Fragment>
+    </>
   );
 }
 

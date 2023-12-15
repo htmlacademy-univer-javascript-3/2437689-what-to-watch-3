@@ -1,18 +1,16 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {PromoFilm} from './utils/consts.ts';
 import { films } from './components/mocks/films.ts';
+import {store} from './store';
+import {Provider} from 'react-redux';
+import {idFirstFilm} from './utils/consts.ts';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <React.StrictMode>
-    <App
-      promoFilm = {PromoFilm}
-      films = {films}
-    />
-  </React.StrictMode>
+  <Provider store={store}>
+    <App mainFilm={films[idFirstFilm]} />
+  </Provider>
 );

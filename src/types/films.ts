@@ -1,32 +1,21 @@
-export type PromoFilmType = {
-  id: number;
-  title: string;
-  genre: string;
-  year: number;
-  src: string;
-  poster: string;
-};
+import { Genres } from '../utils/consts.ts';
 
-export type FilmCardType = {
+export type Film = {
   id: number;
+  genre: Genres;
+  year: string;
   title: string;
-  src: string;
-  poster: string;
-  ratingScore: number;
-  ratingLevel: string;
-  ratingCount: number;
-  description: string;
-  director: string;
+  text: string;
+  director: string[];
   starring: string[];
-  genre: string;
-  runTime: number;
-  releaseDate: number;
-  pictureBackground: string;
-  video: string;
+  trailer: string;
+  score: number;
+  level: string;
+  time: string;
+  rewievs: ReviewType[];
 };
 
 export type ReviewType = {
-  id: number;
   author: string;
   rating: number;
   comment: string;

@@ -1,41 +1,19 @@
-import FilmCard from './film-card';
-import {FilmCardType} from '../../types/films';
-import {useState} from 'react';
-import {TimeoutId} from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
-
+import {FilmCard} from './film-card';
+import {Film} from '../../types/films';
 
 type FilmCardsProps = {
-  films: FilmCardType[];
-  filmsCount: number;
+  mainFilmId: number;
+  films: Film[];
 };
 
-export function FilmCards({films, filmsCount}: FilmCardsProps): JSX.Element {
-  const [activeFilm, setSelectedFilm] = useState<number | null>(null);
-  let timer: undefined | TimeoutId = undefined;
-
-  const handleFilmFocus = (id: number) => {
-    timer = setTimeout(() => {
-      setSelectedFilm(id);
-    }, 1000);
-  };
-
-  const handleFilmOut = () => {
-    clearTimeout(timer);
-    setSelectedFilm(null);
-  };
-
+export function FilmCards({ mainFilmId, films }: FilmCardsProps): JSX.Element {
   return (
     <div className="catalog__films-list">
-      {films.slice(0, filmsCount).map((film) => (
-        <FilmCard
-          key={film.id}
-          promoFilm={film}
-          activeFilm={activeFilm}
-          onMouseOver={handleFilmFocus}
-          onMouseOut={handleFilmOut}
-        />
-      ))}
+      {films.map((film) => {
+        if (film.id !== mainFilmId) {
+          return <FilmCard key={film.id} film={film} />;
+        }
+      })}
     </div>
   );
 }
-

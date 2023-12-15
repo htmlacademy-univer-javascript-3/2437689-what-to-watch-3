@@ -1,14 +1,18 @@
-export const MoreLikeFilmsCount = 4;
-export const ShowFilmsCount = 8;
+export const idFirstFilm = 0;
+export const hoverFilmCardTime = 1000;
 
-export const PromoFilm = {
-  id: 1,
-  title: 'The Grand Budapest Hotel',
-  genre: 'Drama',
-  year: 2014,
-  src: '/img/bg-the-grand-budapest-hotel.jpg',
-  poster: '/img/the-grand-budapest-hotel-poster.jpg',
-};
+export enum Genres {
+  All = 'All Genres',
+  Comedy = 'Comedy',
+  Crime = 'Crime',
+  Documentary = 'Documentary',
+  Drama = 'Drama',
+  Horror = 'Horror',
+  KidsFamily = 'Kids & Family',
+  Romance = 'Romance',
+  SciFi = 'Sci-Fi',
+  Thriller = 'Thriller'
+}
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -31,10 +35,14 @@ export enum TabType {
   Reviews = 'Reviews',
 }
 
-export enum Grade {
-  Bad = 'Bad',
-  Normal = 'Normal',
-  Good = 'Good',
-  VeryGood = 'Very good',
-  Awesome = 'Awesome',
+export enum FilmImage {
+  BgImage,
+  Poster,
+  SmallCard,
 }
+
+export const tabTypes: TabType[] = [
+  TabType.Overview,
+  TabType.Details,
+  TabType.Reviews,
+];

@@ -1,207 +1,517 @@
-import {FilmCardType} from '../../types/films';
+import {Film} from '../../types/films';
+import {Genres} from '../../utils/consts.ts';
 
-export const films: FilmCardType[] = [
+export const VIDEO_URL =
+  'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4';
+
+export const films: Film[] = [
   {
     id: 1,
-    title: 'Bohemian Rhapsody',
-    src: 'img/bohemian-rhapsody.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2014,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    genre: Genres.Drama,
+    year: '2014',
+    title: 'The Grand Budapest Hotel',
+    text: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.',
+    director: ['Wes Anderson'],
+    starring: [
+      'Bill Murray',
+      'Edward Norton',
+      'Jude Law',
+      'Willem Dafoe',
+      'Saoirse Ronan',
+      'Tony Revoloru',
+      'Tilda Swinton',
+      'Tom Wilkinson',
+      'Owen Wilkinson',
+      'Adrien Brody',
+      'Ralph Fiennes',
+      'Jeff Goldblum',
+    ],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 8.9,
+    level: 'Very good',
+    time: '1h 39m',
+    rewievs: [
+      {
+        author: 'Kate Muir',
+        date: 'December 24, 2016',
+        comment: 'Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&apos;s funniest and most exquisitely designed films in years.',
+        rating: 8.9,
+      },
+      {
+        author: 'Bill Goodykoontz',
+        date: 'November 18, 2015',
+        comment: 'Anderson&apos;s films are too precious for some, but for those of us willing to lose ourselves in them, they&apos;re a delight. &quot;The Grand Budapest Hotel&quot; is no different, except that he has added a hint of gravitas to the mix, improving the recipe.',
+        rating: 8.0,
+      },
+      {
+        author: 'Amanda Greever',
+        date: 'November 18, 2015',
+        comment: ' I didn&apos;t find it amusing, and while I can appreciate the creativity, it&apos;s an hour and 40 minutes I wish I could take back.',
+        rating: 8.0,
+      },
+      {
+        author: 'Matthew Lickona',
+        date: 'December 20, 2016',
+        comment: 'The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.',
+        rating: 7.2,
+      },
+      {
+        author: 'Paula Fleri-Soler',
+        date: 'December 20, 2016',
+        comment: 'It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.',
+        rating: 7.6,
+      },
+      {
+        author: 'Paula Fleri-Soler',
+        date: 'December 20, 2016',
+        comment: 'It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.',
+        rating: 7.0,
+      },
+    ],
+  },
+  {
     id: 2,
+    genre: Genres.KidsFamily,
+    year: '2018',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
-    src: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    text: 'In 1927, as the Magical Congress of the United States of America (MACUSA) is transferring the dark wizard Gellert Grindelwald to Europe to stand trial, Grindelwald escapes.',
+    director: ['David Yates'],
+    starring: [
+      'Eddie Redmayne',
+      'Katherine Waterston',
+      'Dan Fogler',
+      'Alison Sudol and other',
+    ],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
     id: 3,
-    title: 'Macbeth',
-    src: 'img/macbeth.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    genre: Genres.Drama,
+    year: '2018',
+    title: 'Bohemian Rhapsody',
+    text: 'In 1985, Queen wait to perform at Live Aid. Fifteen years earlier, in 1970, Farrokh Bulsara works as a baggage handler at Heathrow Airport and lives with his parents and sister. He goes to a pub to see the band Smile perform.',
+    director: ['Bryan Singer'],
+    starring: ['Rami Malek', 'Lucy Boynton', 'Gwilym Lee', 'Ben Hardy'],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
     id: 4,
-    title: 'We need to talk about Kevin',
-    src: 'img/we-need-to-talk-about-kevin.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    genre: Genres.Drama,
+    year: '2015',
+    title: 'Macbeth',
+    text: 'The film starts with the Macbeths grieving at their child&apos;s funeral. Then, Macbeth leads King Duncan&apos;s troops into a civil war battle. He emerges victorious, despite losses, including boy soldiers.',
+    director: ['Justin Kurzel'],
+    starring: [
+      'Michael Fassbender',
+      'Marion Cotillard',
+      'Paddy Considine',
+      'Sean Harris',
+    ],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
     id: 5,
-    title: 'What We Do in the Shadows Revenant',
-    src: 'img/what-we-do-in-the-shadows.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    genre: Genres.Thriller,
+    year: '2011',
+    title: 'We need to talk about Kevin',
+    text: 'Eva Khatchadourian, once a successful travel writer, lives alone in a rundown house and works in a travel agency near a prison, where she visits her son Kevin.',
+    director: ['Lynne Ramsay'],
+    starring: ['Tilda Swinton', 'John C. Reilly', 'Ezra Miller'],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
     id: 6,
-    title: 'Johnny English',
-    src: 'img/johnny-english.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    genre: Genres.Comedy,
+    year: '2014',
+    title: 'What We Do in the Shadows',
+    text: 'A documentary crew follows four vampire housemates—Viago, Vladislav, Deacon, and Petyr—who share a flat in the Wellington suburb of Te Aro. All of the vampires possess supernatural powers, including levitation and the ability to transform into animals.',
+    director: ['Jemaine Clement', 'Taika Waititi'],
+    starring: [
+      'Taika Waititi',
+      'Jemaine Clement',
+      'Jonathan Brugh',
+      'Cori Gonzalez-Macuer',
+      'Stu Rutherford',
+    ],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
     id: 7,
-    title: 'Pulp Fiction',
-    src: 'img/pulp-fiction.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  }, {
+    genre: Genres.Drama,
+    year: '2015',
+    title: 'Revenant',
+    text: 'In late 1823, fur trapper Hugh Glass guides Captain Andrew Henry&apos;s trappers through the territory of the present-day Dakotas. While he and his half-Pawnee son, Hawk, are hunting, the company&apos;s camp is attacked by an Arikara war party which is seeking to recover its Chief&apos;s abducted daughter, Powaqa.',
+    director: ['Alejandro G. Iñárritu'],
+    starring: [
+      'Leonardo DiCaprio',
+      'Tom Hardy',
+      'Domhnall Gleeson',
+      'Will Poulter',
+    ],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
     id: 8,
+    genre: Genres.Comedy,
+    year: '2003',
+    title: 'Johnny English',
+    text: 'Kindhearted but clumsy MI7 agent Johnny English dreams of becoming Agent One, MI7&apos;s top agent. After the real Agent One and then all of MI7&apos;s remaining agents are killed through English&apos;s unwitting incompetence at his funeral, he is left as the sole surviving agent capable of finishing Agent One&apos;s mission.',
+    director: ['Peter Howitt'],
+    starring: [
+      'Rowan Atkinson',
+      'Natalie Imbruglia',
+      'Ben Miller',
+      'John Malkovich',
+    ],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 9,
+    genre: Genres.Documentary,
+    year: '',
+    title: 'Shutter Island',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 10,
+    genre: Genres.KidsFamily,
+    year: '',
+    title: 'Pulp Fiction',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 11,
+    genre: Genres.Romance,
+    year: '',
     title: 'No Country for Old Men',
-    src: 'img/no-country-for-old-men.jpg',
-    poster: 'img/the-grand-budapest-hotel-poster.jpg',
-    ratingScore: 8.8,
-    ratingLevel: 'Very Good',
-    ratingCount: 302,
-    description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge\n' +
-      '                  Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave`s friend and protege.\n' +
-      '                \n' +
-      '\n' +
-      '                Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying\n' +
-      '                  the sexual needs of the many elderly women who stay there. When one of Gustave`s lovers dies\n' +
-      '                  mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her\n' +
-      '                  murder.',
-    director: 'Quentin Tarantino',
-    starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-    genre: 'Drama',
-    runTime: 148,
-    releaseDate: 2007,
-    pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-    video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 12,
+    genre: Genres.SciFi,
+    year: '',
+    title: 'Snatch',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 13,
+    genre: Genres.SciFi,
+    year: '',
+    title: 'Moonrise Kingdom',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 14,
+    genre: Genres.Crime,
+    year: '',
+    title: 'Seven Years in Tibet',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 15,
+    genre: Genres.Romance,
+    year: '',
+    title: 'Midnight Special',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 16,
+    genre: Genres.Documentary,
+    year: '',
+    title: 'War of the Worlds',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 17,
+    genre: Genres.Crime,
+    year: '',
+    title: 'Dardjeeling Limited',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 18,
+    genre: Genres.Horror,
+    year: '',
+    title: 'Orlando',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 20,
+    genre: Genres.KidsFamily,
+    year: '',
+    title: 'Mindhunter',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
+  },
+  {
+    id: 21,
+    genre: Genres.KidsFamily,
+    year: '',
+    title: 'Midnight Special',
+    text: '',
+    director: [''],
+    starring: [''],
+    trailer:
+      'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
+    score: 1,
+    level: '1',
+    time: '1h',
+    rewievs: [
+      {
+        author: '',
+        date: '',
+        comment: '',
+        rating: 10.0,
+      },
+    ],
   },
 ];
-
-export const mainFilm = {
-  id: 1,
-  title: 'The Grand Budapest Hotel',
-  src: 'img/bg-the-grand-budapest-hotel.jpg',
-  poster: 'img/the-grand-budapest-hotel-poster.jpg',
-  ratingScore: 8.8,
-  ratingLevel: 'Very Good',
-  ratingCount: 302,
-  description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.',
-  director: 'Wes Anderson',
-  starring: ['Matt Damon', 'Tom Hanks', 'Takeshi Kitano', 'Christian Bale'],
-  genre: 'Drama',
-  runTime: 148,
-  releaseDate: 2014,
-  pictureBackground: 'img/bg-the-grand-budapest-hotel.jpg',
-  video: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-};

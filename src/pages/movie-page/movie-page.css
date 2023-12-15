@@ -22,3 +22,8 @@
   width: 280px;
   height: 175px;
 }
+
+.btn--play-film-card__button-item {
+  width: 18px;
+  height: 14px;
+}

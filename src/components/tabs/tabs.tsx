@@ -1,52 +1,45 @@
-import {SyntheticEvent, useState} from 'react';
-import {FilmCardType} from '../../types/films';
-import {TabType} from '../../utils/consts.ts';
-import {reviews} from '../mocks/reviews';
-import TabLink from './tab-link';
-import Details from './details';
-import Overview from './overview';
-import Reviews from './reviews';
+import {useState} from 'react';
+import {Film} from '../../types/films';
+import {TabType, tabTypes} from '../../utils/consts.ts';
+import {TabOverview} from './tab-overview.tsx';
+import {TabDetails} from './tab-details.tsx';
+import {TabReviews} from './tab-reviews.tsx';
 
 type TabsProps = {
-  filmCard: FilmCardType;
+  film: Film;
+};
+
+function GetTabComponent(tab: TabType, film: Film): JSX.Element {
+  switch (tab) {
+    case TabType.Overview:
+      return <TabOverview film={film} />;
+    case TabType.Details:
+      return <TabDetails film={film} />;
+    case TabType.Reviews:
+      return <TabReviews film={film} />;
+  }
 }
-
-export default function Tabs({filmCard}: TabsProps): JSX.Element {
-  const [tab, setTab] = useState(TabType.Overview);
-  const tabs = {
-    [TabType.Overview]: <Overview filmCard={filmCard} />,
-    [TabType.Details]: <Details filmCard={filmCard} />,
-    [TabType.Reviews]: <Reviews reviews={reviews} />,
-  };
-
-  const handleTabChange = (evt: SyntheticEvent) => {
-    const targetId = evt.currentTarget.id as TabType;if (targetId) {
-      setTab(targetId);
-    }
-  };
-
+export function Tabs({ film }: TabsProps): JSX.Element {
+  const [tab, setTab] = useState<TabType>(TabType.Overview);
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">
-        <ul className="film-nav__list" onClick={handleTabChange}>
-          <TabLink
-            tabType={TabType.Overview}
-            activeTab={tab}
-            onClick={handleTabChange}
-          />
-          <TabLink
-            tabType={TabType.Details}
-            activeTab={tab}
-            onClick={handleTabChange}
-          />
-          <TabLink
-            tabType={TabType.Reviews}
-            activeTab={tab}
-            onClick={handleTabChange}
-          />
+        <ul className="film-nav__list">
+          {tabTypes.map((item) => (
+            <li className="film-nav__item" key={item}>
+              <div
+                onClick={() => {
+                  setTab(item);
+                }}
+                className="film-nav__link"
+              >
+                {item}
+              </div>
+            </li>
+          ))}
         </ul>
       </nav>
-      {tabs[tab]}
+      {GetTabComponent(tab, film)}
     </div>
   );
 }

@@ -1,31 +1,23 @@
-import {Grade} from './consts.ts';
+import {FilmImage} from './consts.ts';
 
-const getFormattedTime = (time: number) => {
-  const hours = Math.floor(time / 60);
-  const minutes = time % 60;
-
-  return `${hours}h ${minutes}m`;
-};
-
-const getFormattedDate = (date: string): string =>
+export const getFormattedDate = (date: string): string =>
   new Date(date).toLocaleString('en-US', {
     month: 'long',
     day: '2-digit',
     year: 'numeric',
   });
 
-const getFilmGrade = (rating: number): Grade => {
-  if (rating <= 3) {
-    return Grade.Bad;
-  } else if (rating <= 5) {
-    return Grade.Normal;
-  } else if (rating <= 8) {
-    return Grade.Good;
-  } else if (rating < 10) {
-    return Grade.VeryGood;
-  } else {
-    return Grade.Awesome;
+export function GetSrcFilmImage(title: string, filmImage: FilmImage): string {
+  let imgName = title.toLowerCase().replace(':', '').replace(/ /gi, '-');
+  switch (filmImage) {
+    case FilmImage.BgImage:
+      imgName = `bg-${imgName}`;
+      break;
+    case FilmImage.Poster:
+      imgName = `${imgName}-poster`;
+      break;
+    case FilmImage.SmallCard:
+      break;
   }
-};
-
-export {getFormattedTime, getFormattedDate, getFilmGrade};
+  return `img/${imgName}.jpg`;
+}
