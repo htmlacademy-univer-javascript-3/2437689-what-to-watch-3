@@ -6,12 +6,12 @@ type FilmCardsProps = {
   films: Film[];
 };
 
-export function FilmCards({ mainFilmId, films }: FilmCardsProps): JSX.Element {
+export function FilmCards({ mainFilmId, films}: FilmCardsProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {films.map((film) => {
         if (film.id !== mainFilmId) {
-          return <FilmCard key={film.id} film={film} />;
+          return <FilmCard key={film.id} film={film}/>;
         }
       })}
     </div>

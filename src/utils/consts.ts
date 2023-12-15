@@ -1,5 +1,12 @@
 export const idFirstFilm = 0;
 export const hoverFilmCardTime = 1000;
+export const visibleFilmCardCount = 8;
+
+export const Setting = {
+  filmCardTitle: 'The Grand Budapest Hotel',
+  filmCardGenre: 'Drama',
+  filmCardYear: 2014
+};
 
 export enum Genres {
   All = 'All Genres',
