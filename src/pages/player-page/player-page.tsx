@@ -22,7 +22,7 @@ function PlayerPage({videoUrl}: PlayerPageProps): JSX.Element {
         </div>
         <div className="player__controls-row">
           <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width={19} height={19}>
+            <svg className="player__play--icon-item" viewBox="0 0 19 19">
               <use xlinkHref="#play-s" />
             </svg>
             <span>Play</span>

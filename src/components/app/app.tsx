@@ -7,24 +7,23 @@ import MoviePage from '../../pages/movie-page/movie-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { AppRoute, AuthorizationStatus } from '../../utils/consts.ts';
+import {AppRoute, AuthorizationStatus, idFirstFilm} from '../../utils/consts.ts';
 import PrivateRoute from '../private-route/private-route';
-import {PromoFilmType, FilmCardType} from '../../types/films';
-import {mainFilm, films} from '../mocks/films.ts';
+import {Film} from '../../types/films';
+import {films, VIDEO_URL} from '../mocks/films.ts';
 
-type AppProps = {
-  promoFilm: PromoFilmType;
-  films: FilmCardType[];
-}
+export type AppProps = {
+  mainFilm: Film;
+};
 
-function App(props: AppProps): JSX.Element {
+function App({ mainFilm }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage {...props} />}
+            element={<MainPage mainFilm={mainFilm} />}
           />
           <Route
             path={AppRoute.SignIn}
@@ -36,20 +35,18 @@ function App(props: AppProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.NoAuth}
               >
-                <MyListPage films={films}/>
+                <MyListPage mainFilm={films[idFirstFilm]} films={films} />
               </PrivateRoute>
             }
           />
-          <Route path={AppRoute.Film}>
-            <Route index element={<MoviePage promoFilms={mainFilm} films={films}/>} />
-            <Route
-              path={AppRoute.AddReview}
-              element={<AddReviewPage promoFilms={mainFilm}/>}
-            />
-          </Route>
+          <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
+          <Route
+            path={AppRoute.AddReview}
+            element={<AddReviewPage film={films[idFirstFilm]} />}
+          />
           <Route
             path={AppRoute.Player}
-            element={<PlayerPage videoUrl={mainFilm.video}/>}
+            element={<PlayerPage videoUrl={VIDEO_URL} />}
           />
           <Route
             path="*"

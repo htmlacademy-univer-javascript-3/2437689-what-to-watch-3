@@ -1,37 +1,59 @@
-import {FilmCardType} from '../../types/films';
-import {AppRoute} from '../../utils/consts.ts';
+import {Film} from '../../types/films';
+import {FilmImage, hoverFilmCardTime} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 import './film-card.css';
-import VideoPlayer from '../../components/video-player/video-player';
+import {VideoPlayer} from '../video-player/video-player.tsx';
+import {getGenreFilms} from '../../store/actions.ts';
+import {useAppDispatch} from '../hooks/hooks.ts';
+import {useEffect, useState} from 'react';
+import {GetSrcFilmImage} from '../../utils/functions.ts';
 
 type FilmCardProps = {
-  promoFilm: FilmCardType;
-  activeFilm: number | null;
-  onMouseOver: (id: number) => void;
-  onMouseOut: () => void;
-}
+  film: Film;
+};
 
-function FilmCard({promoFilm, activeFilm, onMouseOver, onMouseOut}: FilmCardProps): JSX.Element {
+export function FilmCard({ film }: FilmCardProps): JSX.Element {
+  const [needPlayVideo, setNeedPlayVideo] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    let isMouseLeave = false;
+    if (needPlayVideo) {
+      setTimeout(() => {
+        if (!isMouseLeave) {
+          setIsPlaying(true);
+        }
+      }, hoverFilmCardTime);
+    }
+    return () => {
+      isMouseLeave = true;
+    };
+  }, [needPlayVideo]);
+
+  const handleMouseEnter = () => {
+    setNeedPlayVideo(true);
+  };
+  const handleMouseLeave = () => {
+    setNeedPlayVideo(false);
+    setIsPlaying(false);
+  };
   return (
-    <article className="small-film-card catalog__films-card">
-      <div
-        className="small-film-card__image"
-        onMouseOver={() => onMouseOver(promoFilm.id)}
-        onMouseOut={() => onMouseOut()}
-      >
-        <VideoPlayer
-          promoFilm={promoFilm}
-          activeFilm={activeFilm}
-          isMuted
-        />
-      </div>
-      <h3 className="small-film-card__title">
-        <Link to={AppRoute.Film} className="small-film-card__link">{promoFilm.title}
-        </Link>
-      </h3>
-    </article>
+    <Link
+      className="small-film-card__link small-film-card catalog__films-card"
+      to={`/films/${film.id}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={() => {
+        dispatch(getGenreFilms({ genre: film.genre }));
+      }}
+    >
+      <VideoPlayer
+        src={film.trailer}
+        poster={GetSrcFilmImage(film.title, FilmImage.SmallCard)}
+        muted
+        isPlaying={isPlaying}
+      />
+      {!isPlaying && <h3 className="small-film-card__title">{film.title}</h3>}
+    </Link>
   );
 }
-
-export default FilmCard;
-

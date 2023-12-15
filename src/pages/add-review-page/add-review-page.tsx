@@ -1,40 +1,59 @@
 import {useState} from 'react';
-import {FilmCardType} from '../../types/films';
+import {Film} from '../../types/films';
 import {AddReviewForm} from './add-review-form';
-import {AppRoute} from '../../utils/consts.ts';
+import {AppRoute, FilmImage} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
+import {GetSrcFilmImage} from '../../utils/functions.ts';
+import {Helmet} from 'react-helmet-async';
 
 type AddReviewPageProps = {
-  promoFilms: FilmCardType;
+  film: Film;
 };
 
-function AddReviewPage({promoFilms}: AddReviewPageProps): JSX.Element {
-  const [, setFilmRating] = useState(0);
+function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
+  const [filmRating, setFilmRating] = useState(0);
+  if (filmRating !== undefined) {
+    return(
+      <div></div>
+    );
+  }
   return (
     <section className="film-card film-card--full">
+      <Helmet>
+        <title>Карточка фильма</title>
+      </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={promoFilms.src} alt={promoFilms.title}/>
+          <img
+            src={GetSrcFilmImage(film.title, FilmImage.BgImage)}
+            alt={film.title}
+          />
         </div>
+
         <h1 className="visually-hidden">WTW</h1>
+
         <header className="page-header">
           <div className="logo">
-            <Link to={AppRoute.Main} className="logo__link">
+            <Link to="/" className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
             </Link>
           </div>
+
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.Film} className="breadcrumbs__link">{promoFilms.title}</Link>
+                <Link to={AppRoute.Film} className="readcrumbs__link">
+                  {film.title}
+                </Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
               </li>
             </ul>
           </nav>
+
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
@@ -50,11 +69,12 @@ function AddReviewPage({promoFilms}: AddReviewPageProps): JSX.Element {
             </li>
           </ul>
         </header>
+
         <div className="film-card__poster film-card__poster--small">
           <img
             className="film-card__poster--image-item"
-            src={promoFilms.poster}
-            alt={`${promoFilms.title} poster`}
+            src={GetSrcFilmImage(film.title, FilmImage.Poster)}
+            alt={`${film.title} poster`}
           />
         </div>
       </div>
