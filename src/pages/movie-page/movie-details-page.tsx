@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../utils/consts.ts';
 import './movie-page.css';
+import UserBlock from '../main-page/user-block.tsx';
 
 function MovieDetailsPage(): JSX.Element {
   return (
@@ -22,16 +23,7 @@ function MovieDetailsPage(): JSX.Element {
               </Link>
             </div>
 
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img className="user-block__image-item" src="img/avatar.jpg" alt="User avatar"/>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserBlock />
           </header>
 
           <div className="film-card__wrap">

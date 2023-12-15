@@ -7,9 +7,12 @@ import {
   setGenre,
   setDataLoadingStatus,
   setFilmsDisplayed,
-  setFilmByGenre
+  setFilmByGenre,
+  requireAuthorization,
+  setUserImage,
+  setError
 } from './actions.ts';
-import {Genres, visibleFilmCardCount} from '../utils/consts.ts';
+import {AuthorizationStatus, Genres, visibleFilmCardCount} from '../utils/consts.ts';
 import {FilmCardType, FilmType, PromoFilmType} from '../types/films.ts';
 
 type InitialState = {
@@ -22,6 +25,8 @@ type InitialState = {
   isFilmsDataLoading: boolean;
   promoFilm: PromoFilmType;
   film: FilmType | null;
+  authorizationStatus: AuthorizationStatus;
+  userImage: string;
 };
 
 const initialState: InitialState = {
@@ -43,6 +48,8 @@ const initialState: InitialState = {
     isFavorite: false,
   },
   film: null,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userImage: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -81,6 +88,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadPromoFilm, (state, action) => {
       state.promoFilm = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserImage, (state, action) => {
+      state.userImage = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

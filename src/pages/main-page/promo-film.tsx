@@ -2,6 +2,7 @@ import {useAppSelector} from '../../components/hooks/hooks.ts';
 import {PromoFilmType} from '../../types/films.ts';
 import {Link} from 'react-router-dom';
 import './main-page.css';
+import UserBlock from './user-block.tsx';
 
 type PromoFilmProps = {
   promoFilm: PromoFilmType;
@@ -27,20 +28,7 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
           </a>
         </div>
 
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img
-                className="user-block__image-item"
-                src="/img/avatar.jpg"
-                alt="User avatar"
-              />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
+        <UserBlock />
       </header>
 
       <div className="film-card__wrap">

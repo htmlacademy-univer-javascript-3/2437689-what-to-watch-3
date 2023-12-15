@@ -3,6 +3,7 @@ import {FilmCardType} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
 import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
+import UserBlock from '../main-page/user-block.tsx';
 
 type MyListPageProps = {
   films: FilmCardType[];
@@ -23,20 +24,7 @@ function MyListPage({ films }: MyListPageProps): JSX.Element {
         <h1 className="page-title user-page__title">
           My list <span className="user-page__film-count">9</span>
         </h1>
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img
-                className="user-block__image-item"
-                src="img/avatar.jpg"
-                alt="User avatar"
-              />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
+        <UserBlock />
       </header>
 
       <section className="catalog">
