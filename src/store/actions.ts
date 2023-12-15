@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Genres } from '../utils/consts.ts';
+import {AuthorizationStatus, Genres} from '../utils/consts.ts';
 import {FilmType, PromoFilmType, FilmCardType} from '../types/films.ts';
 
 export const loadFilm = createAction<FilmType | null>('films/loadFilm');
@@ -12,3 +12,6 @@ export const setFilmsDisplayed = createAction('films/setFilmsDisplayed');
 export const setDataLoadingStatus = createAction<boolean>(
   'data/setDataLoadingStatus'
 );
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const setUserImage = createAction<string>('user/image');
+export const setError = createAction<string | null>('films/error');

@@ -1,5 +1,6 @@
 export const hoverFilmCardTime = 1000;
 export const visibleFilmCardCount = 8;
+export const showErrorTimeout = 2000;
 
 export const APIRoute = {
   Films: () => '/films',
@@ -8,7 +9,7 @@ export const APIRoute = {
   Promo: () => '/promo',
   Favorite: () => '/favorite',
   Comments: (filmId: string) => `/comments/${filmId}`,
-  SignIn: () => '/login',
+  Login: () => '/login',
   Logout: () => '/logout',
   AddReview: () => '/films/:id/review',
   MyList: () => '/mylist',

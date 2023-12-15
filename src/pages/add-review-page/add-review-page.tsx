@@ -5,6 +5,7 @@ import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import './add-review-page.css';
+import UserBlock from '../main-page/user-block.tsx';
 
 type AddReviewPageProps = {
   film: PromoFilmType;
@@ -51,20 +52,7 @@ function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
             </ul>
           </nav>
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  className="user-block__image-item"
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserBlock />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

@@ -6,7 +6,7 @@ import MoviePage from '../../pages/movie-page/movie-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import {AppRoute, AuthorizationStatus} from '../../utils/consts.ts';
+import {AppRoute} from '../../utils/consts.ts';
 import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../hooks/hooks.ts';
 import Spinner from '../spinner/spinner.tsx';
@@ -34,9 +34,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
-            >
+            <PrivateRoute>
               <MyListPage films={films} />
             </PrivateRoute>
           }

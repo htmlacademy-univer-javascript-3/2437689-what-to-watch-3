@@ -1,7 +1,31 @@
 import {AppRoute} from '../../utils/consts.ts';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {useAppDispatch} from '../../components/hooks/hooks.ts';
+import {ChangeEventHandler, FormEventHandler, useState} from 'react';
+import {login} from '../../services/api-actions';
+
+export type UserFormValues = {
+  email: string;
+  password: string;
+}
 
 function SignInPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<UserFormValues>({
+    email: '',
+    password: '',
+  });
+
+  const handleFieldChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
+    const { name, value } = evt.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit: FormEventHandler = () => {
+    dispatch(login(formData));
+    navigate('/');
+  };
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -24,6 +48,7 @@ function SignInPage(): JSX.Element {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                onChange={handleFieldChange}
               />
               <label
                 className="sign-in__label visually-hidden"
@@ -39,6 +64,7 @@ function SignInPage(): JSX.Element {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                onChange={handleFieldChange}
               />
               <label
                 className="sign-in__label visually-hidden"
@@ -49,7 +75,7 @@ function SignInPage(): JSX.Element {
             </div>
           </div>
           <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">
+            <button className="sign-in__btn" type="submit" onChange={handleSubmit}>
               Sign in
             </button>
           </div>
