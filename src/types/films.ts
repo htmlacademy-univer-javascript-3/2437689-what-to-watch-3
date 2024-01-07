@@ -20,14 +20,6 @@ export type FilmType = {
   isFavorite: boolean;
 };
 
-export type FilmCardType = {
-  id: string;
-  name: string;
-  previewImage: string;
-  previewVideoLink: string;
-  genre: Genres;
-};
-
 export type PromoFilmType = {
   id: string;
   name: string;

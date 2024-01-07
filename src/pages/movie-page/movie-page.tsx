@@ -9,7 +9,7 @@ import { NotFoundPage } from '../not-found-page/not-found-page';
 import { ReturnToMainPage } from '../../utils/functions';
 import './movie-page.css';
 import UserBlock from '../main-page/user-block.tsx';
-import {setDataLoadingStatus} from "../../store/actions.ts";
+import {setDataLoadingStatus} from '../../store/actions.ts';
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();

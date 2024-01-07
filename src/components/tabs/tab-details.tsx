@@ -1,5 +1,5 @@
-import React from "react";
-import {useAppSelector} from "../hooks/hooks.ts";
+import React from 'react';
+import {useAppSelector} from '../hooks/hooks.ts';
 
 function TabDetails(): JSX.Element {
   const film = useAppSelector((state) => state.film);
@@ -14,7 +14,7 @@ function TabDetails(): JSX.Element {
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
             {film?.starring.map((actor) => (
-                <React.Fragment key={actor}>{actor}, <br /> </React.Fragment>
+              <React.Fragment key={actor}>{actor}, <br /> </React.Fragment>
             ))}
           </span>
         </p>

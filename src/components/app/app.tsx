@@ -22,46 +22,46 @@ function App(): JSX.Element {
     return <Spinner />;
   }
   return (
-      <HelmetProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path={AppRoute.Main}
-              element={<MainPage promoFilm={promoFilm} />}
-            />
-            <Route
-              path={AppRoute.Login}
-              element={<SignInPage />}
-            />
-            <Route
-              path={AppRoute.MyList}
-              element={
-                <PrivateRoute>
-                  <MyListPage films={films} />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path={AppRoute.Film}
-              element={<MoviePage />}
-            />
-            <Route
-              path={AppRoute.AddReview}
-              element={
-                <AddReviewPage film={promoFilm}/>
-              }
-            />
-            <Route
-              path={AppRoute.Player}
-              element={<PlayerPage videoUrl={''} />}
-            />
-            <Route
-              path="*"
-              element={<NotFoundPage />}
-            />
-          </Routes>
-        </BrowserRouter>
-      </HelmetProvider>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={AppRoute.Main}
+            element={<MainPage promoFilm={promoFilm} />}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<SignInPage />}
+          />
+          <Route
+            path={AppRoute.MyList}
+            element={
+              <PrivateRoute>
+                <MyListPage films={films} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Film}
+            element={<MoviePage />}
+          />
+          <Route
+            path={AppRoute.AddReview}
+            element={
+              <AddReviewPage film={promoFilm}/>
+            }
+          />
+          <Route
+            path={AppRoute.Player}
+            element={<PlayerPage videoUrl={''} />}
+          />
+          <Route
+            path="*"
+            element={<NotFoundPage />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

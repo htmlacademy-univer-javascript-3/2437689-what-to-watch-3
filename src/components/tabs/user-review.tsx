@@ -7,7 +7,7 @@ type UserReviewProps = {
 export default function UserReview({review}: UserReviewProps): JSX.Element {
   const convertDate = (inputDateStr: string) => {
     const inputDate = new Date(inputDateStr);
-      return inputDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+    return inputDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
   };
 
   return (

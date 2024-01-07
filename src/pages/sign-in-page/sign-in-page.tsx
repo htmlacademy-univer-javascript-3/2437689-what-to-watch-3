@@ -15,7 +15,7 @@ function SignInPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const authorizationStatus = useAppSelector(
-      (state) => state.authorizationStatus
+    (state) => state.authorizationStatus
   );
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -23,10 +23,10 @@ function SignInPage(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(
-          loginAction({
-            login: loginRef.current.value,
-            password: passwordRef.current.value,
-          })
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        })
       );
     }
     if (authorizationStatus === AuthorizationStatus.Auth) {

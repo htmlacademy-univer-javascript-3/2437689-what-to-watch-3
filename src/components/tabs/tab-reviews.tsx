@@ -2,7 +2,7 @@ import {Review} from '../../types/films';
 import UserReview from './user-review';
 
 type TabReviewsProps = {
-  reviews: Review[]
+  reviews: Review[];
 };
 
 function TabReviews({ reviews }: TabReviewsProps): JSX.Element {
