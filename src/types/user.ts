@@ -1,6 +1,11 @@
 export type UserData = {
-  name: string;
-  avatarUrl: string;
+  id: number;
   email: string;
   token: string;
 };
+
+export type UserReview = {
+  filmId: string;
+  rating: number;
+  comment: string;
+}

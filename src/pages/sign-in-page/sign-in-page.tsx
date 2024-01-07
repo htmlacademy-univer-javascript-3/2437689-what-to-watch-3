@@ -1,8 +1,8 @@
-import {AppRoute} from '../../utils/consts.ts';
+import {AppRoute, AuthorizationStatus} from '../../utils/consts.ts';
 import {Link, useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../components/hooks/hooks.ts';
-import {ChangeEventHandler, FormEventHandler, useState} from 'react';
-import {login} from '../../services/api-actions';
+import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
+import {FormEvent, useRef} from 'react';
+import {loginAction} from '../../services/api-actions';
 
 export type UserFormValues = {
   email: string;
@@ -12,19 +12,26 @@ export type UserFormValues = {
 function SignInPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<UserFormValues>({
-    email: '',
-    password: '',
-  });
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
-  const handleFieldChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
-    const { name, value } = evt.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
 
-  const handleSubmit: FormEventHandler = () => {
-    dispatch(login(formData));
-    navigate('/');
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
+    }
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
   };
   return (
     <div className="user-page">
@@ -39,16 +46,17 @@ function SignInPage(): JSX.Element {
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
+        <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
+                ref={loginRef}
                 className="sign-in__input"
                 type="email"
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
-                onChange={handleFieldChange}
+
               />
               <label
                 className="sign-in__label visually-hidden"
@@ -59,12 +67,12 @@ function SignInPage(): JSX.Element {
             </div>
             <div className="sign-in__field">
               <input
+                ref={passwordRef}
                 className="sign-in__input"
                 type="password"
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
-                onChange={handleFieldChange}
               />
               <label
                 className="sign-in__label visually-hidden"
@@ -75,7 +83,7 @@ function SignInPage(): JSX.Element {
             </div>
           </div>
           <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit" onChange={handleSubmit}>
+            <button className="sign-in__btn" type="submit">
               Sign in
             </button>
           </div>

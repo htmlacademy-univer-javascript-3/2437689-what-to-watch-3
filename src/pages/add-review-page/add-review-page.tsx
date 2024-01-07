@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {PromoFilmType} from '../../types/films';
 import {AddReviewForm} from './add-review-form';
 import {AppRoute} from '../../utils/consts.ts';
@@ -12,12 +11,6 @@ type AddReviewPageProps = {
 };
 
 function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
-  const [filmRating, setFilmRating] = useState(0);
-  if (filmRating !== undefined) {
-    return(
-      <div></div>
-    );
-  }
   return (
     <section className="film-card film-card--full">
       <Helmet>
@@ -64,7 +57,7 @@ function AddReviewPage({ film }: AddReviewPageProps): JSX.Element {
         </div>
       </div>
       <div className="add-review">
-        <AddReviewForm onAnswer={(rating) => setFilmRating(rating)} />
+        <AddReviewForm />
       </div>
     </section>
   );

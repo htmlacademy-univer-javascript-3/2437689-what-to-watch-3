@@ -1,4 +1,4 @@
-import {FilmCardType} from '../../types/films';
+import {FilmType} from '../../types/films';
 import {hoverFilmCardTime} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 import './film-card.css';
@@ -6,7 +6,7 @@ import {VideoPlayer} from '../video-player/video-player.tsx';
 import {useEffect, useState} from 'react';
 
 type FilmCardProps = {
-  film: FilmCardType;
+  film: FilmType;
 };
 
 export function FilmCard({ film }: FilmCardProps): JSX.Element {

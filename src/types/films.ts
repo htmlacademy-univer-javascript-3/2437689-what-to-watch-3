@@ -6,6 +6,8 @@ export type FilmType = {
   posterImage: string;
   backgroundImage: string;
   backgroundColor: string;
+  previewImage: string;
+  previewVideoLink: string;
   videoLink: string;
   description: string;
   rating: number;
@@ -16,14 +18,6 @@ export type FilmType = {
   genre: Genres;
   released: number;
   isFavorite: boolean;
-};
-
-export type FilmCardType = {
-  id: string;
-  name: string;
-  previewImage: string;
-  previewVideoLink: string;
-  genre: Genres;
 };
 
 export type PromoFilmType = {
@@ -37,7 +31,7 @@ export type PromoFilmType = {
   isFavorite: boolean;
 };
 
-export type Comment = {
+export type Review = {
   id: string;
   date: string;
   user: string;

@@ -10,16 +10,16 @@ import {
   setFilmByGenre,
   requireAuthorization,
   setUserImage,
-  setError
+  setError, loadReviews, loadSimilarFilms
 } from './actions.ts';
 import {AuthorizationStatus, Genres, visibleFilmCardCount} from '../utils/consts.ts';
-import {FilmCardType, FilmType, PromoFilmType} from '../types/films.ts';
+import {FilmType, PromoFilmType, Review} from '../types/films.ts';
 
 type InitialState = {
   genre: Genres;
-  films: FilmCardType[];
-  filmsDisplayed: FilmCardType[];
-  filmsByGenre: FilmCardType[];
+  films: FilmType[];
+  filmsDisplayed: FilmType[];
+  filmsByGenre: FilmType[];
   filmsCardCount: number;
   error: string | null;
   isFilmsDataLoading: boolean;
@@ -27,6 +27,8 @@ type InitialState = {
   film: FilmType | null;
   authorizationStatus: AuthorizationStatus;
   userImage: string;
+  reviews: Review[];
+  similarFilms: FilmType[];
 };
 
 const initialState: InitialState = {
@@ -50,6 +52,8 @@ const initialState: InitialState = {
   film: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   userImage: '',
+  reviews: [],
+  similarFilms: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -97,6 +101,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
     });
 });
 
