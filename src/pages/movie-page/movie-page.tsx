@@ -1,26 +1,31 @@
 import {FilmCards} from '../../components/film-card/film-cards';
-import {AppRoute} from '../../utils/consts.ts';
+import {AppRoute, AuthorizationStatus} from '../../utils/consts.ts';
 import {Link, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
-import { fetchFilmAction } from '../../services/api-actions';
+import {fetchFilmAction, fetchReviewsByID, fetchSimilarByID} from '../../services/api-actions';
 import { useEffect } from 'react';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import { ReturnToMainPage } from '../../utils/functions';
 import './movie-page.css';
 import UserBlock from '../main-page/user-block.tsx';
+import {setDataLoadingStatus} from "../../store/actions.ts";
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const mainFilm = useAppSelector((state) => state.film);
-  const filmsLikeMain = useAppSelector((state) => state.films);
+  const filmsLikeMain = useAppSelector((state) => state.similarFilms);
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchFilmAction(id));
-    }
-  }, [dispatch, id]);
+    dispatch(setDataLoadingStatus(true));
+    dispatch(fetchFilmAction(String(id)));
+    dispatch(fetchSimilarByID(String(id)));
+    dispatch(fetchReviewsByID(String(id)));
+    dispatch(setDataLoadingStatus(false));
+  }, [id, dispatch]);
 
   if (!mainFilm) {
     return <NotFoundPage />;
@@ -81,9 +86,11 @@ function MoviePage(): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={AppRoute.AddReview} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                  <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -94,12 +101,12 @@ function MoviePage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img
                 className="film-card__poster--image-item"
-                src={mainFilm?.backgroundImage}
+                src={mainFilm?.posterImage}
                 alt={mainFilm?.name}
               />
             </div>
 
-            <Tabs film={mainFilm} />
+            <Tabs />
           </div>
         </div>
       </section>

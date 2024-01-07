@@ -10,6 +10,7 @@ import {AppRoute} from '../../utils/consts.ts';
 import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../hooks/hooks.ts';
 import Spinner from '../spinner/spinner.tsx';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App(): JSX.Element {
   const isQuestionsDataLoading = useAppSelector(
@@ -21,39 +22,46 @@ function App(): JSX.Element {
     return <Spinner />;
   }
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<MainPage promoFilm={promoFilm} />}
-        />
-        <Route
-          path={AppRoute.SignIn}
-          element={<SignInPage />}
-        />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute>
-              <MyListPage films={films} />
-            </PrivateRoute>
-          }
-        />
-        <Route path={AppRoute.Film} element={<MoviePage />} />
-        <Route
-          path={AppRoute.AddReview}
-          element={<AddReviewPage film={promoFilm} />}
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<PlayerPage videoUrl={''} />}
-        />
-        <Route
-          path="*"
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path={AppRoute.Main}
+              element={<MainPage promoFilm={promoFilm} />}
+            />
+            <Route
+              path={AppRoute.Login}
+              element={<SignInPage />}
+            />
+            <Route
+              path={AppRoute.MyList}
+              element={
+                <PrivateRoute>
+                  <MyListPage films={films} />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={AppRoute.Film}
+              element={<MoviePage />}
+            />
+            <Route
+              path={AppRoute.AddReview}
+              element={
+                <AddReviewPage film={promoFilm}/>
+              }
+            />
+            <Route
+              path={AppRoute.Player}
+              element={<PlayerPage videoUrl={''} />}
+            />
+            <Route
+              path="*"
+              element={<NotFoundPage />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </HelmetProvider>
   );
 }
 

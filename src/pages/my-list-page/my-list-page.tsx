@@ -1,12 +1,12 @@
 import './my-list-page.css';
-import {FilmCardType} from '../../types/films';
+import {FilmType} from '../../types/films';
 import {FilmCards} from '../../components/film-card/film-cards';
 import {AppRoute} from '../../utils/consts.ts';
 import {Link} from 'react-router-dom';
 import UserBlock from '../main-page/user-block.tsx';
 
 type MyListPageProps = {
-  films: FilmCardType[];
+  films: FilmType[];
 };
 
 function MyListPage({ films }: MyListPageProps): JSX.Element {

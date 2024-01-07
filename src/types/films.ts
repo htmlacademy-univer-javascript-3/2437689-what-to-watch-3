@@ -6,6 +6,8 @@ export type FilmType = {
   posterImage: string;
   backgroundImage: string;
   backgroundColor: string;
+  previewImage: string;
+  previewVideoLink: string;
   videoLink: string;
   description: string;
   rating: number;
@@ -37,7 +39,7 @@ export type PromoFilmType = {
   isFavorite: boolean;
 };
 
-export type Comment = {
+export type Review = {
   id: string;
   date: string;
   user: string;

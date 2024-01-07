@@ -2,18 +2,27 @@ export const hoverFilmCardTime = 1000;
 export const visibleFilmCardCount = 8;
 export const showErrorTimeout = 2000;
 
-export const APIRoute = {
+/*export const APIRoute = {
   Films: () => '/films',
   Film: (filmId: string) => `/films/${filmId}`,
-  Similar: (filmId: string) => `/films/${filmId}/similar`,
+  Similar: () => '/similar',
   Promo: () => '/promo',
   Favorite: () => '/favorite',
-  Comments: (filmId: string) => `/comments/${filmId}`,
+  Reviews: ()  => '/comments',
   Login: () => '/login',
   Logout: () => '/logout',
   AddReview: () => '/films/:id/review',
   MyList: () => '/mylist',
-};
+};*/
+
+export enum APIRoute {
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
+  Reviews = '/comments',
+  Similar = '/similar',
+  Promo = '/promo'
+}
 
 export enum Genres {
   All = 'All genres',
@@ -39,7 +48,8 @@ export enum AuthorizationStatus {
 
 export enum AppRoute {
   Main = '/',
-  SignIn = '/login',
+  Login = '/login',
+  Logout = '/logout',
   MyList = '/mylist',
   Film = '/films/:id',
   AddReview = '/films/:id/review',
