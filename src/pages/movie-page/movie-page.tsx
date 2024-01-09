@@ -1,6 +1,6 @@
 import {FilmCards} from '../../components/film-cards/film-cards.tsx';
-import {AuthorizationStatus} from '../../consts.ts';
-import {Link, useParams} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../consts.ts';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
 import {
@@ -10,8 +10,8 @@ import {
   fetchReviews,
   fetchSimilarFilms
 } from "../../store/api-actions.ts";
-import { useEffect } from 'react';
-import { NotFoundPage } from '../not-found-page/not-found-page';
+import {useEffect} from 'react';
+import {NotFoundPage} from '../not-found-page/not-found-page';
 import './movie-page.css';
 import UserBlock from '../../components/user-block/user-block.tsx';
 import {getFilm, getLoadedDataStatusFilm, getSimilarFilms} from "../../store/film-reducer/selectors.ts";
@@ -25,13 +25,12 @@ import {setMyListCount} from "../../store/actions.ts";
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
   const mainFilm = useAppSelector(getFilm);
-  console.log(mainFilm)
-  console.log('1', mainFilm?.isFavorite)
   const filmsLikeMain = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthStatus);
   const isFilmDataLoading = useAppSelector(getLoadedDataStatusFilm);
-  const myListCount = useAppSelector(getMyListCount);
+  const myListCount = useAppSelector(getMyListCount)
 
   useEffect(() => {
     dispatch(fetchFilm(String(id)));
@@ -48,12 +47,13 @@ function MoviePage(): JSX.Element {
   }
 
   const addHandler = () => {
-    dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm.isFavorite) }));
-    console.log('2 ',mainFilm.isFavorite)
-    if (mainFilm?.isFavorite) {
-      dispatch(setMyListCount(myListCount - 1));
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm?.isFavorite) }));
+       (mainFilm?.isFavorite)
+         ? dispatch(setMyListCount(myListCount - 1))
+         : dispatch(setMyListCount(myListCount + 1));
     } else {
-      dispatch(setMyListCount(myListCount + 1));
+      navigate(AppRoute.Login)
     }
   };
 
@@ -95,29 +95,25 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                {authorizationStatus === AuthorizationStatus.Auth && (
-                    <button
-                        className="btn btn--list film-card__button"
-                        onClick={addHandler}
-                    >
-                      {mainFilm?.isFavorite ? (
-                          <svg viewBox="0 0 18 14" width="19" height="14">
-                            <use xlinkHref="#in-list" />
-                          </svg>
-                      ) : (
-                          <svg viewBox="0 0 19 20" width="19" height="20">
-                            <use xlinkHref="#add" />
-                          </svg>
-                      )}
-                      <span>My list</span>
-                      <span className="film-card__count">{myListCount}</span>
-                    </button>
-                )}
-                {authorizationStatus === AuthorizationStatus.Auth && (
-                  <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
-                    Add review
-                  </Link>
-                )}
+                <button
+                    className="btn btn--list film-card__button"
+                    onClick={addHandler}
+                >
+                  {mainFilm?.isFavorite ? (
+                      <svg viewBox="0 0 18 14" width="19" height="14">
+                        <use xlinkHref="#in-list" />
+                      </svg>
+                  ) : (
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add" />
+                      </svg>
+                  )}
+                  <span>My list</span>
+                  { authorizationStatus === AuthorizationStatus.Auth && (<span className="film-card__count">{myListCount}</span>) }
+                </button>
+                <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
+                  Add review
+                </Link>
               </div>
             </div>
           </div>
@@ -133,7 +129,7 @@ function MoviePage(): JSX.Element {
               />
             </div>
 
-            <Tabs />
+            <Tabs film={mainFilm}/>
           </div>
         </div>
       </section>
@@ -142,7 +138,7 @@ function MoviePage(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmCards films={filmsLikeMain} />
+          <FilmCards films={filmsLikeMain.slice(0, 4)} />
         </section>
 
         <Footer />

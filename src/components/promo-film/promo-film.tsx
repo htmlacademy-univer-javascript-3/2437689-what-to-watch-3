@@ -1,11 +1,11 @@
 import {useAppDispatch, useAppSelector} from '../hooks/hooks.ts';
 import {FilmType} from '../../types/films.ts';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import '../../pages/main-page/main-page.css';
 import UserBlock from '../user-block/user-block.tsx';
 import {getMyListCount} from '../../store/films-reducer/selectors.ts';
 import {Logo} from '../logo/logo.tsx';
-import {AuthorizationStatus} from "../../consts.ts";
+import {AppRoute, AuthorizationStatus} from "../../consts.ts";
 import {getAuthStatus} from "../../store/user-reducer/selectors.ts";
 import {useEffect} from "react";
 import {changePromoFavoriteStatus, fetchFavoriteFilms} from "../../store/api-actions.ts";
@@ -19,6 +19,7 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);
   const myListCount = useAppSelector(getMyListCount);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Auth) {
@@ -27,11 +28,13 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
   }, [authStatus, dispatch]);
 
   const addHandler = () => {
-    dispatch(changePromoFavoriteStatus({ filmId: promoFilm.id, status: +(!promoFilm?.isFavorite) }));
-    if (promoFilm?.isFavorite) {
-      dispatch(setMyListCount(myListCount - 1));
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(changePromoFavoriteStatus({filmId: promoFilm.id, status: +(!promoFilm?.isFavorite)}));
+      (promoFilm?.isFavorite)
+        ? dispatch(setMyListCount(myListCount - 1))
+        : dispatch(setMyListCount(myListCount + 1));
     } else {
-      dispatch(setMyListCount(myListCount + 1));
+      navigate(AppRoute.Login)
     }
   };
 
@@ -72,24 +75,22 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
                 </svg>
                 <span>Play</span>
               </Link>
-              {authStatus === AuthorizationStatus.Auth && (
-                  <button
-                      className="btn btn--list film-card__button"
-                      onClick={addHandler}
-                  >
-                    {promoFilm?.isFavorite ? (
-                        <svg viewBox="0 0 18 14" width="19" height="14">
-                          <use xlinkHref="#in-list" />
-                        </svg>
-                    ) : (
-                        <svg viewBox="0 0 19 20" width="19" height="20">
-                          <use xlinkHref="#add" />
-                        </svg>
-                    )}
-                    <span>My list</span>
-                    <span className="film-card__count">{myListCount}</span>
-                  </button>
-              )}
+              <button
+                  className="btn btn--list film-card__button"
+                  onClick={addHandler}
+              >
+                {promoFilm?.isFavorite ? (
+                    <svg viewBox="0 0 18 14" width="19" height="14">
+                      <use xlinkHref="#in-list" />
+                    </svg>
+                ) : (
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add" />
+                    </svg>
+                )}
+                <span>My list</span>
+                { authStatus === AuthorizationStatus.Auth && (<span className="film-card__count">{myListCount}</span>) }
+              </button>
             </div>
           </div>
         </div>

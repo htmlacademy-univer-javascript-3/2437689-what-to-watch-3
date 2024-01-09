@@ -6,9 +6,12 @@ type FilmCardsProps = {
 };
 
 export function FilmCards({ films }: FilmCardsProps): JSX.Element {
+  let noFilmsText = (films.length === 0) ? "No films" : ""
+
   return (
     <div className="catalog__films-list">
       {films.map((film) => <FilmCard key={film.id} film={film} />)}
+      {noFilmsText}
     </div>
   );
 }
