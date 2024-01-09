@@ -5,6 +5,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import {postReview} from '../../store/api-actions.ts';
 import RatingItem from '../rating-item/rating-item.tsx';
 import {getFilm} from '../../store/film-reducer/selectors.ts';
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from '../../consts.ts';
 
 export function AddReviewForm(): JSX.Element {
   const [filmRating, setFilmRating] = useState(0);
@@ -57,7 +58,10 @@ export function AddReviewForm(): JSX.Element {
           <button
             className="add-review__btn"
             type="submit"
-            disabled={!filmRating || !commentRef.current?.value || commentRef.current?.value.length < 50 || commentRef.current?.value.length > 400}
+            disabled={!filmRating
+                || !commentRef.current?.value
+                || commentRef.current?.value.length < MIN_REVIEW_LENGTH
+                || commentRef.current?.value.length > MAX_REVIEW_LENGTH}
           >
             Post
           </button>

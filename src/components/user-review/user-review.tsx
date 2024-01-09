@@ -1,15 +1,11 @@
-import {Review} from '../../types/films.ts';
+import {convertDate} from '../../utils/utils.ts';
+import {Review} from "../../types/types.ts";
 
 type UserReviewProps = {
   review: Review;
 };
 
 export default function UserReview({review}: UserReviewProps): JSX.Element {
-  const convertDate = (inputDateStr: string) => {
-    const inputDate = new Date(inputDateStr);
-    return inputDate.toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-  };
-
   return (
     <div className="review">
       <blockquote className="review__quote">

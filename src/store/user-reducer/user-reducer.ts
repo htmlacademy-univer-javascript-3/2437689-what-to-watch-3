@@ -1,8 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {login, logout, checkAuth} from '../api-actions';
-import {UserState} from '../../types/state.ts';
 import {AuthorizationStatus, ReducerName} from '../../consts.ts';
-import {dropToken, saveToken} from '../../services/token.ts';
+import {UserState} from "../../types/types.ts";
 
 const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.NoAuth,
@@ -17,7 +16,6 @@ export const userReducer = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.userAvatar = action.payload.avatar;
-        saveToken(action.payload.token);
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(login.rejected, (state) => {
@@ -26,7 +24,6 @@ export const userReducer = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.userAvatar = undefined;
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        dropToken();
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.userAvatar = action.payload.avatar;

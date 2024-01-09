@@ -1,18 +1,18 @@
 import './player-page.css';
-import {useNavigate, useParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../components/hooks/hooks.ts";
-import {useEffect, useRef, useState} from "react";
-import {fetchFilm} from "../../store/api-actions.ts";
-import {getFilm} from "../../store/film-reducer/selectors.ts";
-import {Helmet} from "react-helmet-async";
-import Spinner from "../../components/spinner/spinner.tsx";
+import {useNavigate, useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
+import {useEffect, useRef, useState} from 'react';
+import {fetchFilm} from '../../store/api-actions.ts';
+import {getFilm} from '../../store/film-reducer/selectors.ts';
+import {Helmet} from 'react-helmet-async';
+import Spinner from '../../components/spinner/spinner.tsx';
 
 function PlayerPage(): JSX.Element {
   const params = useParams();
   const id = params.id;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const film = useAppSelector(getFilm);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -23,10 +23,7 @@ function PlayerPage(): JSX.Element {
     }
   },[dispatch,id]);
 
-
-  const film = useAppSelector(getFilm);
-
-  const togglePlay = () => {
+  const playToggle = () => {
     if (videoRef.current){
       if (isPlaying) {
         videoRef.current.pause();
@@ -36,15 +33,13 @@ function PlayerPage(): JSX.Element {
     }
     setIsPlaying(!isPlaying);
   };
-
-  const toggleFullscreen = () => {
+  const fullScreenToggle = () => {
     if (videoRef.current){
       if (videoRef.current.requestFullscreen) {
         videoRef.current.requestFullscreen();
       }
     }
   };
-
   const getFilmDuration = () => {
     const video = videoRef.current;
     if (!video || !film) {
@@ -52,7 +47,6 @@ function PlayerPage(): JSX.Element {
     }
     return video.duration;
   };
-
   const getFilmCurrentTime = () => {
     const video = videoRef.current;
     if (!video) {
@@ -60,7 +54,6 @@ function PlayerPage(): JSX.Element {
     }
     return video.currentTime;
   };
-
   const getTimeLeft = (leftTime: number) => {
     const hours = Math.floor(leftTime / 60 / 60);
     const minutes = Math.floor((leftTime % 3600) / 60);
@@ -79,13 +72,20 @@ function PlayerPage(): JSX.Element {
     setCurrentTime(getFilmCurrentTime());
   }
 
-
   return film ? (
     <div className="player">
       <Helmet>
         <title>{film?.name}</title>
       </Helmet>
-      <video ref={videoRef} width="1200" height="800" src={film?.videoLink} className="player__video" poster={film?.posterImage} onTimeUpdate={onTimeUpdateVideo}/>
+      <video
+        ref={videoRef}
+        width="1200"
+        height="800"
+        src={film?.videoLink}
+        className="player__video"
+        poster={film?.posterImage}
+        onTimeUpdate={onTimeUpdateVideo}
+      />
       <button onClick={handleExit} type="button" className="player__exit">
         Exit
       </button>
@@ -101,14 +101,14 @@ function PlayerPage(): JSX.Element {
           <div className="player__time-value">{getTimeLeft(getFilmDuration() - currentTime)}</div>
         </div>
         <div className="player__controls-row">
-          <button type="button" className="player__play" onClick={togglePlay}>
+          <button type="button" className="player__play" onClick={playToggle}>
             <svg className="player__play--icon-item" viewBox="0 0 19 19">
               {isPlaying ? <use xlinkHref="#pause" /> : <use xlinkHref="#play-s" />}
             </svg>
             <span>{isPlaying ? 'Stop' : 'Play'}</span>
           </button>
           <div className="player__name">Transpotting</div>
-          <button type="button" className="player__full-screen" onClick={toggleFullscreen}>
+          <button type="button" className="player__full-screen" onClick={fullScreenToggle}>
             <svg className="player__full-screen--icon-item" viewBox="0 0 27 27">
               <use xlinkHref="#full-screen" />
             </svg>

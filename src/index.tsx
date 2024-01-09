@@ -18,7 +18,7 @@ root.render(
   <Provider store={store}>
     <ToastContainer />
     <ErrorMessage />
-    <App/>
+    <App />
     <ToastContainer />
   </Provider>
 );

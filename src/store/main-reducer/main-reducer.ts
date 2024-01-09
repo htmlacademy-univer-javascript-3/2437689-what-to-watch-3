@@ -1,8 +1,8 @@
-import {MainState} from '../../types/state.ts';
 import {createSlice} from '@reduxjs/toolkit';
 import {ReducerName} from '../../consts.ts';
 import {setError} from '../actions';
 import {changePromoFavoriteStatus, fetchPromoFilm} from '../api-actions.ts';
+import {MainState} from "../../types/types.ts";
 
 const initialState: MainState = {
   error: null,
@@ -26,8 +26,8 @@ export const mainReducer = createSlice({
         state.promoFilm = action.payload;
         state.isDataLoading = false;
       })
-        .addCase(changePromoFavoriteStatus.fulfilled, (state, action) => {
-          state.promoFilm = action.payload;
-        });
+      .addCase(changePromoFavoriteStatus.fulfilled, (state, action) => {
+        state.promoFilm = action.payload;
+      });
   }
 });

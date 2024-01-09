@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import './video-player.css'
 
 type VideoPlayerProps = {
   src: string;
@@ -30,8 +31,7 @@ export function VideoPlayer(
   }, [isPlaying]);
   return (
     <video
-      width="280"
-      height="175"
+      className="video-player"
       ref={videoRef}
       src={src}
       poster={poster}

@@ -9,7 +9,7 @@ export default function UserBlock(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthStatus);
   const userAvatar = useAppSelector(getAvatar);
   const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const signOutClickHandler = () => {
     dispatch(logout());
     navigate(AppRoute.Main);
@@ -28,13 +28,13 @@ export default function UserBlock(): JSX.Element {
     <ul className="user-block">
       <li className="user-block__item">
         <div className="user-block__avatar">
-            <Link to={'/mylist'}>
-              <img
-                className="user-block__image-item"
-                src={userAvatar || 'img/avatar.jpg'}
-                alt="User avatar"
-              />
-            </Link>
+          <Link to={'/mylist'}>
+            <img
+              className="user-block__image-item"
+              src={userAvatar || 'img/avatar.jpg'}
+              alt="User avatar"
+            />
+          </Link>
         </div>
       </li>
       <li className="user-block__item">

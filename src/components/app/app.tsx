@@ -11,10 +11,10 @@ import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../hooks/hooks.ts';
 import Spinner from '../spinner/spinner.tsx';
 import { HelmetProvider } from 'react-helmet-async';
-import {getLoadedDataStatusFilms} from '../../store/films-reducer/selectors.ts';
+import {getIsDataLoadingFilms} from '../../store/films-reducer/selectors.ts';
 
 function App(): JSX.Element {
-  const isQuestionsDataLoading = useAppSelector(getLoadedDataStatusFilms);
+  const isQuestionsDataLoading = useAppSelector(getIsDataLoadingFilms);
   if (isQuestionsDataLoading) {
     return <Spinner />;
   }

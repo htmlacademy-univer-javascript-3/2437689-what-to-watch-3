@@ -1,11 +1,12 @@
-import {AppRoute, AuthorizationStatus} from '../../consts.ts';
+import {AppRoute, AuthorizationStatus, RE_EMAIL_VALID, RE_PASSWORD_VALID} from '../../consts.ts';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
 import {FormEvent, useRef, useState} from 'react';
 import {login} from '../../store/api-actions.ts';
 import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
-import {AuthData} from '../../types/auth.ts';
 import Message from '../../components/message/message.tsx';
+
+import {AuthData} from "../../types/types.ts";
 
 export type UserFormValues = {
   email: string;
@@ -21,15 +22,15 @@ function SignInPage(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthStatus);
 
   const signInValidator = (data: { email: string; password: string }) => {
-    const isEmailValid = /^\S+@\S+\.\S+$/.test(data.email);
-    const isPasswordValid = /^(?=^[a-zA-Z0-9]{2,}$)(?=.*\d)(?=.*[a-zA-Z]).*$/.test(data.password);
+    const isEmailValid = RE_EMAIL_VALID.test(data.email);
+    const isPasswordValid = RE_PASSWORD_VALID.test(data.password);
 
     if (!isPasswordValid && !isEmailValid) {
-      return 'We can’t recognize this email and password combination. Please try again.';
+      return 'The email and password are not correct';
     } else if (!isPasswordValid) {
       return 'The password is not correct: it must contain at least 1 number and 1 letter';
     } else if (!isEmailValid) {
-      return 'Please enter a valid email address';
+      return 'The email is not correct';
     }
 
     return null;

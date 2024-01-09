@@ -1,13 +1,13 @@
 import {useState} from 'react';
-import {FilmType, Review} from '../../types/films';
 import {TabType, tabTypes} from '../../consts.ts';
 import TabOverview from './tab-overview/tab-overview.tsx';
 import TabReviews from './tab-reviews/tab-reviews.tsx';
 import {useAppSelector} from '../hooks/hooks.ts';
 import TabDetails from './tab-details/tab-details.tsx';
-import {getReviews} from "../../store/film-reducer/selectors.ts";
+import {getReviews} from '../../store/film-reducer/selectors.ts';
+import {FilmType, Review} from "../../types/types.ts";
 
-function GetTabComponent(tab: TabType, film: FilmType, reviews: Review[]): JSX.Element {
+function getTab(tab: TabType, film: FilmType, reviews: Review[]): JSX.Element {
   switch (tab) {
     case TabType.Overview:
       return <TabOverview film={film} />;
@@ -19,7 +19,7 @@ function GetTabComponent(tab: TabType, film: FilmType, reviews: Review[]): JSX.E
 }
 
 type TabsProps = {
-  film: FilmType
+  film: FilmType;
 }
 
 export function Tabs({ film }: TabsProps): JSX.Element {
@@ -31,14 +31,17 @@ export function Tabs({ film }: TabsProps): JSX.Element {
         <ul className="film-nav__list">
           {tabTypes.map((item) => (
             <li className="film-nav__item" key={item}>
-              <div onClick={() => {setTab(item);}} className="film-nav__link">
+              <div onClick={() => {
+                setTab(item);
+              }} className="film-nav__link"
+              >
                 {item}
               </div>
             </li>
           ))}
         </ul>
       </nav>
-      {GetTabComponent(tab, film, reviews)}
+      {getTab(tab, film, reviews)}
     </div>
   );
 }

@@ -9,28 +9,28 @@ import {
   fetchFilm,
   fetchReviews,
   fetchSimilarFilms
-} from "../../store/api-actions.ts";
+} from '../../store/api-actions.ts';
 import {useEffect} from 'react';
 import {NotFoundPage} from '../not-found-page/not-found-page';
 import './movie-page.css';
 import UserBlock from '../../components/user-block/user-block.tsx';
-import {getFilm, getLoadedDataStatusFilm, getSimilarFilms} from "../../store/film-reducer/selectors.ts";
-import {getAuthStatus} from "../../store/user-reducer/selectors.ts";
+import {getFilm, getIsDataLoadingFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
+import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
 import Footer from '../../components/footer/footer.tsx';
 import {Logo} from '../../components/logo/logo.tsx';
-import {getMyListCount} from "../../store/films-reducer/selectors.ts";
-import Spinner from "../../components/spinner/spinner.tsx";
-import {setMyListCount} from "../../store/actions.ts";
+import {getMyListCount} from '../../store/films-reducer/selectors.ts';
+import Spinner from '../../components/spinner/spinner.tsx';
+import {setMyListCount} from '../../store/actions.ts';
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const mainFilm = useAppSelector(getFilm);
   const filmsLikeMain = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthStatus);
-  const isFilmDataLoading = useAppSelector(getLoadedDataStatusFilm);
-  const myListCount = useAppSelector(getMyListCount)
+  const isFilmDataLoading = useAppSelector(getIsDataLoadingFilm);
+  const myListCount = useAppSelector(getMyListCount);
 
   useEffect(() => {
     dispatch(fetchFilm(String(id)));
@@ -42,24 +42,26 @@ function MoviePage(): JSX.Element {
     }
   }, [id, dispatch, authorizationStatus]);
 
+  if (isFilmDataLoading) {
+    return <Spinner />;
+  }
+
   if (!mainFilm) {
     return <NotFoundPage />;
   }
 
   const addHandler = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm?.isFavorite) }));
-       (mainFilm?.isFavorite)
-         ? dispatch(setMyListCount(myListCount - 1))
-         : dispatch(setMyListCount(myListCount + 1));
+      dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm.isFavorite) }));
+      if (mainFilm?.isFavorite) {
+        dispatch(setMyListCount(myListCount - 1));
+      } else {
+        dispatch(setMyListCount(myListCount + 1));
+      }
     } else {
-      navigate(AppRoute.Login)
+      navigate(AppRoute.Login);
     }
   };
-
-  if (isFilmDataLoading) {
-    return <Spinner />;
-  }
   return (
     <>
       <section className="film-card film-card--full">
@@ -96,18 +98,12 @@ function MoviePage(): JSX.Element {
                   <span>Play</span>
                 </Link>
                 <button
-                    className="btn btn--list film-card__button"
-                    onClick={addHandler}
+                  className="btn btn--list film-card__button"
+                  onClick={addHandler}
                 >
-                  {mainFilm?.isFavorite ? (
-                      <svg viewBox="0 0 18 14" width="19" height="14">
-                        <use xlinkHref="#in-list" />
-                      </svg>
-                  ) : (
-                      <svg viewBox="0 0 19 20" width="19" height="20">
-                        <use xlinkHref="#add" />
-                      </svg>
-                  )}
+                  <svg viewBox="0 0 18 14" width="19" height="14">
+                    <use xlinkHref={mainFilm?.isFavorite ? '#in-list' : '#add'} />
+                  </svg>
                   <span>My list</span>
                   { authorizationStatus === AuthorizationStatus.Auth && (<span className="film-card__count">{myListCount}</span>) }
                 </button>

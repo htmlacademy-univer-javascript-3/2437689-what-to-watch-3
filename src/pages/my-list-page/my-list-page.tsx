@@ -5,21 +5,21 @@ import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
 import {getMyListFilms} from '../../store/films-reducer/selectors.ts';
 import Footer from '../../components/footer/footer.tsx';
 import {Logo} from '../../components/logo/logo.tsx';
-import {getAuthStatus} from "../../store/user-reducer/selectors.ts";
-import {AuthorizationStatus} from "../../consts.ts";
-import {fetchFavoriteFilms} from "../../store/api-actions.ts";
-import {useEffect} from "react";
+import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
+import {AuthorizationStatus} from '../../consts.ts';
+import {fetchFavoriteFilms} from '../../store/api-actions.ts';
+import {useEffect} from 'react';
 
 function MyListPage(): JSX.Element {
-    const authStatus = useAppSelector(getAuthStatus);
-    const myListFilms = useAppSelector(getMyListFilms);
-    const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(getAuthStatus);
+  const myListFilms = useAppSelector(getMyListFilms);
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (authStatus === AuthorizationStatus.Auth) {
-            dispatch(fetchFavoriteFilms());
-        }
-    }, [authStatus, dispatch]);
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilms());
+    }
+  }, [authStatus, dispatch]);
 
   return (
     <div className="user-page">
