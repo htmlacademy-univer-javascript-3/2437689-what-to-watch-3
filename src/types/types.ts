@@ -1,5 +1,5 @@
-import {AuthorizationStatus, Genres} from "../consts.ts";
-import {store} from "../store";
+import {AuthorizationStatus, Genres} from '../consts.ts';
+import {store} from '../store';
 
 export type AuthData = {
     email: string;

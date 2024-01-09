@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {FilmType} from "../../../types/types.ts";
+import {FilmType} from '../../../types/types.ts';
 
 function convertToText(rating: number):string{
   let textRating = '';

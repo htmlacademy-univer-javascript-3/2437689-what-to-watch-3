@@ -4,7 +4,7 @@ import {APIRoute, SHOW_ERROR_TIMEOUT} from '../consts.ts';
 import {dropToken, saveToken} from '../services/token.ts';
 import {setError} from './actions.ts';
 
-import {AppDispatch, AuthData, FilmType, Review, State, UserData} from "../types/types.ts";
+import {AppDispatch, AuthData, FilmType, Review, State, UserData} from '../types/types.ts';
 
 export const fetchFilms = createAsyncThunk<FilmType[], undefined, { state: State; extra: AxiosInstance }>
 (

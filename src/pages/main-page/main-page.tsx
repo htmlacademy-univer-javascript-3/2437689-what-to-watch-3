@@ -6,15 +6,15 @@ import PromoFilm from '../../components/promo-film/promo-film.tsx';
 import ShowMoreButton from '../../components/show-more-button/show-more-button.tsx';
 import {getFilmsByGenre, getFilmsCount} from '../../store/films-reducer/selectors.ts';
 import {getIsDataLoadingPromo, getPromo} from '../../store/main-reducer/selectors.ts';
-import Spinner from "../../components/spinner/spinner.tsx";
+import Spinner from '../../components/spinner/spinner.tsx';
 
 function MainPage(): JSX.Element {
   const filmCount = useAppSelector(getFilmsCount);
   const filmsByGenres = useAppSelector(getFilmsByGenre);
   const promoFilm = useAppSelector(getPromo);
-  const isDataLoadingPromo = useAppSelector(getIsDataLoadingPromo)
+  const isDataLoadingPromo = useAppSelector(getIsDataLoadingPromo);
   if (isDataLoadingPromo) {
-    return <Spinner/>
+    return <Spinner/>;
   }
   return (
     <>

@@ -1,5 +1,5 @@
 import {Genres} from '../consts.ts';
-import {FilmType} from "../types/types.ts";
+import {FilmType} from '../types/types.ts';
 
 export const convertTime = (time: number) => {
   const hours = Math.floor(time / 60);

@@ -1,5 +1,5 @@
 import {ReducerName} from '../../consts.ts';
-import {FilmType, Review, State} from "../../types/types.ts";
+import {FilmType, Review, State} from '../../types/types.ts';
 
 export const getIsDataLoadingFilm = (state: State): boolean => state[ReducerName.FILM].isDataLoading;
 export const getFilm = (state: State): FilmType | null => state[ReducerName.FILM].film;

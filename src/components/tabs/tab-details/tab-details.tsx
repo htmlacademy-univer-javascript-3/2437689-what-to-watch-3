@@ -1,7 +1,7 @@
 import React from 'react';
 import {convertTime} from '../../../utils/utils.ts';
 
-import {FilmType} from "../../../types/types.ts";
+import {FilmType} from '../../../types/types.ts';
 
 type TabDetailsProps = {
   film: FilmType;

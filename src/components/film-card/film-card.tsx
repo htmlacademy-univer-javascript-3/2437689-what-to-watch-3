@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import './film-card.css';
 import {VideoPlayer} from '../video-player/video-player.tsx';
 import {useEffect, useState} from 'react';
-import {FilmType} from "../../types/types.ts";
+import {FilmType} from '../../types/types.ts';
 
 type FilmCardProps = {
   film: FilmType;

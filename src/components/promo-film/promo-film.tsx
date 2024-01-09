@@ -10,7 +10,7 @@ import {useEffect} from 'react';
 import {changePromoFavoriteStatus, fetchFavoriteFilms} from '../../store/api-actions.ts';
 import {setMyListCount} from '../../store/actions.ts';
 import './promo-film.css';
-import {FilmType} from "../../types/types.ts";
+import {FilmType} from '../../types/types.ts';
 
 type PromoFilmProps = {
   promoFilm: FilmType;

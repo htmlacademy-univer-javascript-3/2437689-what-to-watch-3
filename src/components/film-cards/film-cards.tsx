@@ -1,6 +1,6 @@
 import {FilmCard} from '../film-card/film-card.tsx';
 
-import {FilmType} from "../../types/types.ts";
+import {FilmType} from '../../types/types.ts';
 
 type FilmCardsProps = {
   films: FilmType[];

@@ -6,7 +6,7 @@ import {login} from '../../store/api-actions.ts';
 import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
 import Message from '../../components/message/message.tsx';
 
-import {AuthData} from "../../types/types.ts";
+import {AuthData} from '../../types/types.ts';
 
 export type UserFormValues = {
   email: string;

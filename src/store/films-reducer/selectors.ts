@@ -1,5 +1,5 @@
 import {ReducerName} from '../../consts.ts';
-import {FilmType, State} from "../../types/types.ts";
+import {FilmType, State} from '../../types/types.ts';
 
 export const getFilms = (state: State): FilmType[] => state[ReducerName.FILMS].films;
 export const getFilmsCount = (state: State): number => state[ReducerName.FILMS].filmsCount;

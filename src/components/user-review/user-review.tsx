@@ -1,5 +1,5 @@
 import {convertDate} from '../../utils/utils.ts';
-import {Review} from "../../types/types.ts";
+import {Review} from '../../types/types.ts';
 
 type UserReviewProps = {
   review: Review;

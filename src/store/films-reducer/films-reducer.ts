@@ -2,7 +2,7 @@ import {Genres, ReducerName} from '../../consts.ts';
 import {createSlice} from '@reduxjs/toolkit';
 import {fetchFavoriteFilms, fetchFilms} from '../api-actions';
 import {setGenre, setMyListCount, showMore} from '../actions.ts';
-import {FilmsState} from "../../types/types.ts";
+import {FilmsState} from '../../types/types.ts';
 
 const initialState: FilmsState = {
   films: [],

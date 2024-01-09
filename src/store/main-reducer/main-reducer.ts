@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {ReducerName} from '../../consts.ts';
 import {setError} from '../actions';
 import {changePromoFavoriteStatus, fetchPromoFilm} from '../api-actions.ts';
-import {MainState} from "../../types/types.ts";
+import {MainState} from '../../types/types.ts';
 
 const initialState: MainState = {
   error: null,

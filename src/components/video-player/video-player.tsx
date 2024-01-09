@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import './video-player.css'
+import './video-player.css';
 
 type VideoPlayerProps = {
   src: string;

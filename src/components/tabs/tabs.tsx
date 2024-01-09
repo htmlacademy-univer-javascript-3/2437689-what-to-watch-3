@@ -5,7 +5,7 @@ import TabReviews from './tab-reviews/tab-reviews.tsx';
 import {useAppSelector} from '../hooks/hooks.ts';
 import TabDetails from './tab-details/tab-details.tsx';
 import {getReviews} from '../../store/film-reducer/selectors.ts';
-import {FilmType, Review} from "../../types/types.ts";
+import {FilmType, Review} from '../../types/types.ts';
 
 function getTab(tab: TabType, film: FilmType, reviews: Review[]): JSX.Element {
   switch (tab) {

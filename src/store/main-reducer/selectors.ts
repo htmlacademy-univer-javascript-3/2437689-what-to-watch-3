@@ -1,5 +1,5 @@
 import {ReducerName} from '../../consts.ts';
-import {State} from "../../types/types.ts";
+import {State} from '../../types/types.ts';
 
 
 export const getError = (state: State) => state[ReducerName.MAIN].error;

@@ -1,5 +1,5 @@
 import UserReview from '../../user-review/user-review.tsx';
-import {Review} from "../../../types/types.ts";
+import {Review} from '../../../types/types.ts';
 
 type TabReviewsProps = {
   reviews: Review[];
