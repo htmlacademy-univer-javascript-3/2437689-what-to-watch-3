@@ -1,16 +1,17 @@
 import {useState, FormEvent, useRef, ChangeEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
-import NotFoundPage from '../not-found-page/not-found-page.tsx';
-import {postReview} from '../../services/api-actions.ts';
-import RatingItem from './rating-item.tsx';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks.ts';
+import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
+import {postReview} from '../../store/api-actions.ts';
+import RatingItem from '../rating-item/rating-item.tsx';
+import {getFilm} from '../../store/film-reducer/selectors.ts';
 
 export function AddReviewForm(): JSX.Element {
   const [filmRating, setFilmRating] = useState(0);
   const commentRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
   if (!film) {
     return <NotFoundPage />;
   }

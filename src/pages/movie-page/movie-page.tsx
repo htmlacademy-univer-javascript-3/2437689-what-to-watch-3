@@ -1,30 +1,29 @@
-import {FilmCards} from '../../components/film-card/film-cards';
-import {AppRoute, AuthorizationStatus} from '../../utils/consts.ts';
+import {FilmCards} from '../../components/film-cards/film-cards.tsx';
+import {AuthorizationStatus} from '../../consts.ts';
 import {Link, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
-import {fetchFilmAction, fetchReviewsByID, fetchSimilarByID} from '../../services/api-actions';
+import {fetchFilm, fetchReviews, fetchSimilarFilms} from '../../store/api-actions.ts';
 import { useEffect } from 'react';
 import { NotFoundPage } from '../not-found-page/not-found-page';
-import { ReturnToMainPage } from '../../utils/functions';
 import './movie-page.css';
-import UserBlock from '../main-page/user-block.tsx';
-import {setDataLoadingStatus} from '../../store/actions.ts';
+import UserBlock from '../../components/user-block/user-block.tsx';
+import {getFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
+import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
+import Footer from '../../components/footer/footer.tsx';
+import {Logo} from '../../components/logo/logo.tsx';
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const mainFilm = useAppSelector((state) => state.film);
-  const filmsLikeMain = useAppSelector((state) => state.similarFilms);
-
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const mainFilm = useAppSelector(getFilm);
+  const filmsLikeMain = useAppSelector(getSimilarFilms);
+  const authorizationStatus = useAppSelector(getAuthStatus);
 
   useEffect(() => {
-    dispatch(setDataLoadingStatus(true));
-    dispatch(fetchFilmAction(String(id)));
-    dispatch(fetchSimilarByID(String(id)));
-    dispatch(fetchReviewsByID(String(id)));
-    dispatch(setDataLoadingStatus(false));
+    dispatch(fetchFilm(String(id)));
+    dispatch(fetchSimilarFilms(String(id)));
+    dispatch(fetchReviews(String(id)));
   }, [id, dispatch]);
 
   if (!mainFilm) {
@@ -41,19 +40,7 @@ function MoviePage(): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <div className="logo">
-              <Link
-                to={AppRoute.Main}
-                className="logo__link"
-                onClick={() => {
-                  ReturnToMainPage();
-                }}
-              >
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </Link>
-            </div>
+            <Logo />
 
             <UserBlock />
           </header>
@@ -67,7 +54,8 @@ function MoviePage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button
+                <Link
+                  to={`/player/${mainFilm?.id}`}
                   className="btn btn--play film-card__button"
                   type="button"
                 >
@@ -75,8 +63,8 @@ function MoviePage(): JSX.Element {
                     <use href="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button
+                </Link>
+                <Link to={'/mylist'}
                   className="btn btn--list film-card__button"
                   type="button"
                 >
@@ -85,7 +73,7 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
-                </button>
+                </Link>
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
                     Add review
@@ -118,24 +106,7 @@ function MoviePage(): JSX.Element {
           <FilmCards films={filmsLikeMain} />
         </section>
 
-        <footer className="page-footer">
-          <div
-            className="logo"
-            onClick={() => {
-              ReturnToMainPage();
-            }}
-          >
-            <Link to={AppRoute.Main} className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

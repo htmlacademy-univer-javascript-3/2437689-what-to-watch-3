@@ -1,19 +1,16 @@
-import {FilmCards} from '../../components/film-card/film-cards';
-import {PromoFilmType} from '../../types/films';
+import {FilmCards} from '../../components/film-cards/film-cards.tsx';
 import './main-page.css';
 import {useAppSelector} from '../../components/hooks/hooks.ts';
-import {GenresList} from '../../components/genres/genre-list.tsx';
-import PromoFilm from './promo-film.tsx';
+import {GenresList} from '../../components/genre-list/genre-list.tsx';
+import PromoFilm from '../../components/promo-film/promo-film.tsx';
 import ShowMoreButton from '../../components/show-more-button/show-more-button.tsx';
+import {getFilmsByGenre, getFilmsCount} from '../../store/films-reducer/selectors.ts';
+import {getPromo} from '../../store/main-reducer/selectors.ts';
 
-export type MainPageProps = {
-  promoFilm: PromoFilmType;
-}
-
-function MainPage({ promoFilm }: MainPageProps): JSX.Element {
-  const countDisplayedFilms = useAppSelector((state) => state.filmsCardCount);
-  const countFilmsByGenres = useAppSelector((state) => state.filmsByGenre);
-  const films = useAppSelector((state) => state.filmsDisplayed);
+function MainPage(): JSX.Element {
+  const filmCount = useAppSelector(getFilmsCount);
+  const filmsByGenres = useAppSelector(getFilmsByGenre);
+  const promoFilm = useAppSelector(getPromo);
   return (
     <>
       {promoFilm && <PromoFilm promoFilm={promoFilm} />}
@@ -25,10 +22,10 @@ function MainPage({ promoFilm }: MainPageProps): JSX.Element {
             <GenresList />
           </ul>
 
-          <FilmCards films={films} />
+          <FilmCards films={filmsByGenres.slice(0, filmCount)} />
 
-          {countDisplayedFilms < countFilmsByGenres.length
-            && <ShowMoreButton count={countDisplayedFilms} />}
+          {filmCount < filmsByGenres.length
+            && <ShowMoreButton />}
         </section>
 
         <footer className="page-footer">

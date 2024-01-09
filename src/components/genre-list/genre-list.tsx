@@ -1,20 +1,14 @@
 import {useAppDispatch} from '../hooks/hooks.ts';
-import {Genres, genres} from '../../utils/consts.ts';
+import {Genres, genres} from '../../consts.ts';
 import {
-  setCount,
   setGenre,
-  setFilmsDisplayed,
-  setFilmByGenre
 } from '../../store/actions.ts';
-import GenreItem from './genre-item.tsx';
+import GenreItem from '../genre-item/genre-item.tsx';
 
 export function GenresList(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleGenreClick = (genre: Genres) => {
-    dispatch(setFilmByGenre({ genre: genre }));
-    dispatch(setGenre());
-    dispatch(setCount({ count: 8 }));
-    dispatch(setFilmsDisplayed());
+    dispatch(setGenre(genre));
   };
   return (
     <ul className="catalog__genres-list">

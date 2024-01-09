@@ -1,15 +1,17 @@
-import {useAppSelector} from '../../components/hooks/hooks.ts';
-import {PromoFilmType} from '../../types/films.ts';
+import {useAppSelector} from '../hooks/hooks.ts';
+import {FilmType} from '../../types/films.ts';
 import {Link} from 'react-router-dom';
-import './main-page.css';
-import UserBlock from './user-block.tsx';
+import '../../pages/main-page/main-page.css';
+import UserBlock from '../user-block/user-block.tsx';
+import {getFilms} from '../../store/films-reducer/selectors.ts';
+import {Logo} from '../logo/logo.tsx';
 
 type PromoFilmProps = {
-  promoFilm: PromoFilmType;
+  promoFilm: FilmType;
 }
 
 export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector(getFilms);
 
   return (
     <section className="film-card">
@@ -20,13 +22,7 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header film-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        <Logo />
 
         <UserBlock />
       </header>
@@ -54,13 +50,13 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
                 </svg>
                 <span>Play</span>
               </Link>
-              <button className="btn btn--list film-card__button" type="button">
+              <Link to={'mylist'} className="btn btn--list film-card__button" type="button">
                 <svg className="btn--list__icon-ite" viewBox="0 0 19 20">
                   <use xlinkHref="#add"></use>
                 </svg>
                 <span>My list</span>
                 <span className="film-card__count">{films.length}</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
