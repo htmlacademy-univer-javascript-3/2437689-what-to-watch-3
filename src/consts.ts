@@ -8,7 +8,8 @@ export enum APIRoute {
   Logout = '/logout',
   Reviews = '/comments',
   Similar = '/similar',
-  Promo = '/promo'
+  Promo = '/promo',
+  Favorite = '/favorite'
 }
 
 export enum Genres {

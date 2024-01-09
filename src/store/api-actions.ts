@@ -135,3 +135,36 @@ export const postReview = createAsyncThunk<
     });
     return data;
   });
+
+export const fetchFavoriteFilms = createAsyncThunk<FilmType[], undefined, {
+    state: State;
+    extra: AxiosInstance;
+}>(
+    'fetchFavoriteFilms',
+    async (_arg, { extra: api }) => {
+        const { data } = await api.get<FilmType[]>(APIRoute.Favorite);
+        return data;
+    }
+);
+
+export const changeFilmFavoriteStatus = createAsyncThunk<FilmType, { filmId: string; status: number }, {
+    state: State;
+    extra: AxiosInstance;
+}>(
+    'changeFilmFavoriteStatus',
+    async ({ filmId: id, status: isFavorite }, { extra: api }) => {
+        const { data } = await api.post<FilmType>(`${APIRoute.Favorite}/${id}/${isFavorite}`);
+        return data;
+    }
+);
+
+export const changePromoFavoriteStatus = createAsyncThunk<FilmType, { filmId: string; status: number }, {
+    state: State;
+    extra: AxiosInstance;
+}>(
+    'changePromoFavoriteStatus',
+    async ({ filmId: id, status: isFavorite }, { extra: api }) => {
+        const { data } = await api.post<FilmType>(`${APIRoute.Favorite}/${id}/${isFavorite}`);
+        return data;
+    }
+);

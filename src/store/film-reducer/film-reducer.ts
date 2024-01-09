@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-import {fetchFilm, fetchReviews, fetchSimilarFilms} from '../api-actions.ts';
+import {changeFilmFavoriteStatus, fetchFilm, fetchReviews, fetchSimilarFilms} from '../api-actions.ts';
 import {FilmState} from '../../types/state.ts';
 import {ReducerName} from '../../consts.ts';
 
@@ -21,7 +21,6 @@ export const filmReducer = createSlice({
         state.isDataLoading = true;
       })
       .addCase(fetchFilm.fulfilled, (state, action) => {
-
         state.film = action.payload;
         state.isDataLoading = false;
       })
@@ -38,6 +37,9 @@ export const filmReducer = createSlice({
       .addCase(fetchSimilarFilms.fulfilled, (state, action) => {
         state.similarFilms = action.payload;
         state.isDataLoading = false;
+      })
+      .addCase(changeFilmFavoriteStatus.fulfilled, (state, action) => {
+        state.film = action.payload;
       });
   }
 });

@@ -18,3 +18,4 @@ export const setError = createAction<string | null>('films/error');
 export const loadReviews = createAction<Review[]>('loadReviews');
 export const loadSimilarFilms = createAction<FilmType[]>('loadSimilarFilms');
 export const showMore = createAction('films/showMoreFilms');
+export const setMyListCount = createAction<number>('setMyListCount');

@@ -24,11 +24,11 @@ function SignInPage(): JSX.Element {
     const isEmailValid = /^\S+@\S+\.\S+$/.test(data.email);
     const isPasswordValid = /^(?=^[a-zA-Z0-9]{2,}$)(?=.*\d)(?=.*[a-zA-Z]).*$/.test(data.password);
 
-    if (!isPasswordValid) {
+    if (!isPasswordValid && !isEmailValid) {
       return 'We can’t recognize this email and password combination. Please try again.';
-    }
-
-    if (!isEmailValid) {
+    } else if (!isPasswordValid) {
+      return 'The password is not correct: it must contain at least 1 number and 1 letter';
+    } else if (!isEmailValid) {
       return 'Please enter a valid email address';
     }
 
@@ -42,13 +42,6 @@ function SignInPage(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      /*dispatch(
-        loginAction({
-          email: loginRef.current.value,
-          password: passwordRef.current.value,
-        })
-      );*/
-
       const data = {
         email: loginRef.current.value,
         password: passwordRef.current.value,
@@ -87,7 +80,6 @@ function SignInPage(): JSX.Element {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
-
               />
               <label
                 className="sign-in__label visually-hidden"

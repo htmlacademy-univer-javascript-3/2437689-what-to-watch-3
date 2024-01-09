@@ -3,31 +3,62 @@ import {AuthorizationStatus} from '../../consts.ts';
 import {Link, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
-import {fetchFilm, fetchReviews, fetchSimilarFilms} from '../../store/api-actions.ts';
+import {
+  changeFilmFavoriteStatus,
+  fetchFavoriteFilms,
+  fetchFilm,
+  fetchReviews,
+  fetchSimilarFilms
+} from "../../store/api-actions.ts";
 import { useEffect } from 'react';
 import { NotFoundPage } from '../not-found-page/not-found-page';
 import './movie-page.css';
 import UserBlock from '../../components/user-block/user-block.tsx';
-import {getFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
-import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
+import {getFilm, getLoadedDataStatusFilm, getSimilarFilms} from "../../store/film-reducer/selectors.ts";
+import {getAuthStatus} from "../../store/user-reducer/selectors.ts";
 import Footer from '../../components/footer/footer.tsx';
 import {Logo} from '../../components/logo/logo.tsx';
+import {getMyListCount} from "../../store/films-reducer/selectors.ts";
+import Spinner from "../../components/spinner/spinner.tsx";
+import {setMyListCount} from "../../store/actions.ts";
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const mainFilm = useAppSelector(getFilm);
+  console.log(mainFilm)
+  console.log('1', mainFilm?.isFavorite)
   const filmsLikeMain = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthStatus);
+  const isFilmDataLoading = useAppSelector(getLoadedDataStatusFilm);
+  const myListCount = useAppSelector(getMyListCount);
 
   useEffect(() => {
     dispatch(fetchFilm(String(id)));
     dispatch(fetchSimilarFilms(String(id)));
     dispatch(fetchReviews(String(id)));
-  }, [id, dispatch]);
+
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilms());
+    }
+  }, [id, dispatch, authorizationStatus]);
 
   if (!mainFilm) {
     return <NotFoundPage />;
+  }
+
+  const addHandler = () => {
+    dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm.isFavorite) }));
+    console.log('2 ',mainFilm.isFavorite)
+    if (mainFilm?.isFavorite) {
+      dispatch(setMyListCount(myListCount - 1));
+    } else {
+      dispatch(setMyListCount(myListCount + 1));
+    }
+  };
+
+  if (isFilmDataLoading) {
+    return <Spinner />;
   }
   return (
     <>
@@ -64,16 +95,24 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={'/mylist'}
-                  className="btn btn--list film-card__button"
-                  type="button"
-                >
-                  <svg className="btn--list__icon-item" viewBox="0 0 19 20">
-                    <use href="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
+                {authorizationStatus === AuthorizationStatus.Auth && (
+                    <button
+                        className="btn btn--list film-card__button"
+                        onClick={addHandler}
+                    >
+                      {mainFilm?.isFavorite ? (
+                          <svg viewBox="0 0 18 14" width="19" height="14">
+                            <use xlinkHref="#in-list" />
+                          </svg>
+                      ) : (
+                          <svg viewBox="0 0 19 20" width="19" height="20">
+                            <use xlinkHref="#add" />
+                          </svg>
+                      )}
+                      <span>My list</span>
+                      <span className="film-card__count">{myListCount}</span>
+                    </button>
+                )}
                 {authorizationStatus === AuthorizationStatus.Auth && (
                   <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
                     Add review

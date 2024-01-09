@@ -1,8 +1,8 @@
 import {FilmsState} from '../../types/state.ts';
 import {Genres, ReducerName} from '../../consts.ts';
 import {createSlice} from '@reduxjs/toolkit';
-import {fetchFilms} from '../api-actions';
-import {setGenre, showMore} from '../actions.ts';
+import {fetchFavoriteFilms, fetchFilms} from '../api-actions';
+import {setGenre, setMyListCount, showMore} from '../actions.ts';
 
 const initialState: FilmsState = {
   films: [],
@@ -11,6 +11,8 @@ const initialState: FilmsState = {
   genre: Genres.All,
   filmsByGenre: [],
   genreFilmsCount: 8,
+  myListFilms: [],
+  myListFilmsCount: 0,
   isDataLoading: false
 };
 
@@ -39,6 +41,15 @@ export const filmsReducer = createSlice({
       })
       .addCase(showMore, (state) => {
         state.filmsCount = state.films.length > state.filmsCount ? state.filmsCount + 8 : state.filmsCount;
-      });
+      })
+        .addCase(fetchFavoriteFilms.fulfilled, (state, action) => {
+          state.myListFilms = action.payload;
+          state.myListFilmsCount = state.myListFilms.length;
+          state.isDataLoading = false;
+        })
+
+        .addCase(setMyListCount, (state, action) => {
+          state.myListFilmsCount = action.payload;
+        });
   }
 });

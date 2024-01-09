@@ -21,6 +21,8 @@ export type FilmsState = {
     genre: Genres;
     filmsByGenre: FilmType[];
     genreFilmsCount: number;
+    myListFilms: FilmType[];
+    myListFilmsCount: number;
     isDataLoading: boolean;
 }
 
