@@ -12,7 +12,8 @@ export const fetchFilms = createAsyncThunk<FilmType[], undefined, { state: State
   async (_arg, { extra: api }) => {
     const { data } = await api.get<FilmType[]>(APIRoute.Films);
     return data;
-  });
+  }
+);
 
 export const fetchFavoriteFilms = createAsyncThunk<FilmType[], undefined, {
     state: State;
@@ -45,7 +46,8 @@ export const fetchReviews = createAsyncThunk<
   async (filmId, { extra: api }) => {
     const { data } = await api.get<Review[]>(`${APIRoute.Reviews}/${filmId}`);
     return data;
-  });
+  }
+);
 
 export const fetchSimilarFilms = createAsyncThunk<
     FilmType[],
@@ -60,7 +62,8 @@ export const fetchSimilarFilms = createAsyncThunk<
   async (filmId, { extra: api }) => {
     const { data } = await api.get<FilmType[]>(`${APIRoute.Films}/${filmId}${APIRoute.Similar}`);
     return data;
-  });
+  }
+);
 
 export const changeFilmFavoriteStatus = createAsyncThunk<FilmType, { filmId: string; status: number }, {
     state: State;
@@ -84,7 +87,8 @@ export const fetchPromoFilm = createAsyncThunk<
   async (_arg, { extra: api }) => {
     const { data } = await api.get<FilmType>(APIRoute.Promo);
     return data;
-  });
+  }
+);
 
 export const changePromoFavoriteStatus = createAsyncThunk<FilmType, { filmId: string; status: number }, {
     state: State;
@@ -175,4 +179,5 @@ export const postReview = createAsyncThunk<
       comment: comment,
     });
     return data;
-  });
+  }
+);

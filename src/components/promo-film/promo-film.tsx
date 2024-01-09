@@ -30,11 +30,12 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
 
   const handleClick = () => {
     if (authStatus === AuthorizationStatus.Auth) {
-      dispatch(changePromoFavoriteStatus({filmId: promoFilm.id, status: +(!promoFilm.isFavorite)}));
-      if (promoFilm?.isFavorite) {
-        dispatch(setMyListCount(myListCount - 1));
-      } else {
+      console.log(promoFilm.isFavorite)
+      dispatch(changePromoFavoriteStatus({filmId: promoFilm.id, status: +(!promoFilm?.isFavorite)}));
+      if (!promoFilm?.isFavorite) {
         dispatch(setMyListCount(myListCount + 1));
+      } else {
+        dispatch(setMyListCount(myListCount - 1));
       }
     } else {
       navigate(AppRoute.Login);
