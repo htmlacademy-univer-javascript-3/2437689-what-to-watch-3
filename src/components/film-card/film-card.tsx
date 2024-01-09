@@ -1,9 +1,9 @@
-import {FilmType} from '../../types/films';
-import {hoverFilmCardTime} from '../../consts.ts';
+import {HOVER_FILM_TIME_CARD} from '../../consts.ts';
 import {Link} from 'react-router-dom';
 import './film-card.css';
 import {VideoPlayer} from '../video-player/video-player.tsx';
 import {useEffect, useState} from 'react';
+import {FilmType} from '../../types/types.ts';
 
 type FilmCardProps = {
   film: FilmType;
@@ -19,7 +19,7 @@ export function FilmCard({ film }: FilmCardProps): JSX.Element {
         if (!isMouseLeave) {
           setIsPlaying(true);
         }
-      }, hoverFilmCardTime);
+      }, HOVER_FILM_TIME_CARD);
     }
     return () => {
       isMouseLeave = true;

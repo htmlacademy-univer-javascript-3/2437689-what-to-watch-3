@@ -1,6 +1,9 @@
-export const hoverFilmCardTime = 1000;
-export const visibleFilmCardCount = 8;
-export const showErrorTimeout = 2000;
+export const HOVER_FILM_TIME_CARD = 1000;
+export const SHOW_ERROR_TIMEOUT = 5000;
+export const RE_EMAIL_VALID = /^\S+@\S+\.\S+$/;
+export const RE_PASSWORD_VALID = /^(?=^[a-zA-Z0-9]{2,}$)(?=.*\d)(?=.*[a-zA-Z]).*$/;
+export const MIN_REVIEW_LENGTH = 50;
+export const MAX_REVIEW_LENGTH = 400;
 
 export enum APIRoute {
   Films = '/films',
@@ -8,7 +11,8 @@ export enum APIRoute {
   Logout = '/logout',
   Reviews = '/comments',
   Similar = '/similar',
-  Promo = '/promo'
+  Promo = '/promo',
+  Favorite = '/favorite'
 }
 
 export enum Genres {
@@ -20,7 +24,6 @@ export enum Genres {
   Fantasy = 'Fantasy',
   Documentary = 'Documentary',
   Horror = 'Horror',
-  KidsFamily = 'Kids & Family',
   Romance = 'Romance',
   Adventure = 'Adventure',
   Thriller = 'Thriller',
@@ -36,7 +39,6 @@ export enum AuthorizationStatus {
 export enum AppRoute {
   Main = '/',
   Login = '/login',
-  Logout = '/logout',
   MyList = '/mylist',
   Film = '/films/:id',
   AddReview = '/films/:id/review',
@@ -53,19 +55,6 @@ export const tabTypes: TabType[] = [
   TabType.Overview,
   TabType.Details,
   TabType.Reviews,
-];
-
-export const genres: Genres[] = [
-  Genres.All,
-  Genres.Comedy,
-  Genres.Crime,
-  Genres.Adventure,
-  Genres.Drama,
-  Genres.Action,
-  Genres.Fantasy,
-  Genres.Romance,
-  Genres.SciFi,
-  Genres.Thriller,
 ];
 
 export enum ReducerName {

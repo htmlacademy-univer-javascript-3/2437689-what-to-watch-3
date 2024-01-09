@@ -1,10 +1,6 @@
 import { useAppDispatch } from '../hooks/hooks';
 import {showMore} from '../../store/actions.ts';
 
-export type ShowMoreButtonProps = {
-  count: number;
-}
-
 export default function ShowMoreButton(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleShowMoreClick = () => {

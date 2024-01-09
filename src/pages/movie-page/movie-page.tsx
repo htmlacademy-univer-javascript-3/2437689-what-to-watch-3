@@ -1,34 +1,67 @@
 import {FilmCards} from '../../components/film-cards/film-cards.tsx';
-import {AuthorizationStatus} from '../../consts.ts';
-import {Link, useParams} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../consts.ts';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
-import {fetchFilm, fetchReviews, fetchSimilarFilms} from '../../store/api-actions.ts';
-import { useEffect } from 'react';
-import { NotFoundPage } from '../not-found-page/not-found-page';
+import {
+  changeFilmFavoriteStatus,
+  fetchFavoriteFilms,
+  fetchFilm,
+  fetchReviews,
+  fetchSimilarFilms
+} from '../../store/api-actions.ts';
+import {useEffect} from 'react';
+import {NotFoundPage} from '../not-found-page/not-found-page';
 import './movie-page.css';
 import UserBlock from '../../components/user-block/user-block.tsx';
-import {getFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
+import {getFilm, getIsDataLoadingFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
 import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
 import Footer from '../../components/footer/footer.tsx';
 import {Logo} from '../../components/logo/logo.tsx';
+import {getMyListCount} from '../../store/films-reducer/selectors.ts';
+import Spinner from '../../components/spinner/spinner.tsx';
+import {setMyListCount} from '../../store/actions.ts';
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const mainFilm = useAppSelector(getFilm);
   const filmsLikeMain = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthStatus);
+  const isFilmDataLoading = useAppSelector(getIsDataLoadingFilm);
+  const myListCount = useAppSelector(getMyListCount);
 
   useEffect(() => {
     dispatch(fetchFilm(String(id)));
     dispatch(fetchSimilarFilms(String(id)));
     dispatch(fetchReviews(String(id)));
-  }, [id, dispatch]);
+
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilms());
+    }
+  }, [id, dispatch, authorizationStatus]);
+
+  if (isFilmDataLoading) {
+    return <Spinner />;
+  }
 
   if (!mainFilm) {
     return <NotFoundPage />;
   }
+
+  const addHandler = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm.isFavorite) }));
+      if (mainFilm?.isFavorite) {
+        dispatch(setMyListCount(myListCount - 1));
+      } else {
+        dispatch(setMyListCount(myListCount + 1));
+      }
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
   return (
     <>
       <section className="film-card film-card--full">
@@ -64,21 +97,19 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to={'/mylist'}
+                <button
                   className="btn btn--list film-card__button"
-                  type="button"
+                  onClick={addHandler}
                 >
-                  <svg className="btn--list__icon-item" viewBox="0 0 19 20">
-                    <use href="#add"></use>
+                  <svg viewBox="0 0 18 14" width="19" height="14">
+                    <use xlinkHref={mainFilm?.isFavorite ? '#in-list' : '#add'} />
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  { authorizationStatus === AuthorizationStatus.Auth && (<span className="film-card__count">{myListCount}</span>) }
+                </button>
+                <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
+                  Add review
                 </Link>
-                {authorizationStatus === AuthorizationStatus.Auth && (
-                  <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
-                    Add review
-                  </Link>
-                )}
               </div>
             </div>
           </div>
@@ -94,7 +125,7 @@ function MoviePage(): JSX.Element {
               />
             </div>
 
-            <Tabs />
+            <Tabs film={mainFilm}/>
           </div>
         </div>
       </section>
@@ -103,7 +134,7 @@ function MoviePage(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmCards films={filmsLikeMain} />
+          <FilmCards films={filmsLikeMain.slice(0, 4)} />
         </section>
 
         <Footer />

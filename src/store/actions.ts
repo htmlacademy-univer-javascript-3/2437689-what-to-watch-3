@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import {AuthorizationStatus, Genres} from '../consts.ts';
-import {FilmType, Review} from '../types/films.ts';
+import {FilmType, Review} from '../types/types.ts';
 
 export const loadFilm = createAction<FilmType | null>('films/loadFilm');
 export const loadPromoFilm = createAction<FilmType>('films/loadPromoFilm');
@@ -18,3 +18,4 @@ export const setError = createAction<string | null>('films/error');
 export const loadReviews = createAction<Review[]>('loadReviews');
 export const loadSimilarFilms = createAction<FilmType[]>('loadSimilarFilms');
 export const showMore = createAction('films/showMoreFilms');
+export const setMyListCount = createAction<number>('setMyListCount');

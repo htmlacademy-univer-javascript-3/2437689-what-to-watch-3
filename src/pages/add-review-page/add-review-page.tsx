@@ -1,6 +1,5 @@
 import {AddReviewForm} from '../../components/add-review-form/add-review-form.tsx';
-import {AppRoute} from '../../consts.ts';
-import {Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import './add-review-page.css';
 import UserBlock from '../../components/user-block/user-block.tsx';
@@ -9,6 +8,7 @@ import {getFilm} from '../../store/film-reducer/selectors.ts';
 import {Logo} from '../../components/logo/logo.tsx';
 
 function AddReviewPage(): JSX.Element {
+  const navigate = useNavigate();
   const film = useAppSelector(getFilm);
 
   return (
@@ -29,9 +29,9 @@ function AddReviewPage(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.Film} className="readcrumbs__link">
+                <a onClick={() => navigate(-1)} className="readcrumbs__link">
                   {film?.name}
-                </Link>
+                </a>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

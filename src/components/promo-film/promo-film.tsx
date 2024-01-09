@@ -1,17 +1,45 @@
-import {useAppSelector} from '../hooks/hooks.ts';
-import {FilmType} from '../../types/films.ts';
-import {Link} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../hooks/hooks.ts';
+import {Link, useNavigate} from 'react-router-dom';
 import '../../pages/main-page/main-page.css';
 import UserBlock from '../user-block/user-block.tsx';
-import {getFilms} from '../../store/films-reducer/selectors.ts';
+import {getMyListCount} from '../../store/films-reducer/selectors.ts';
 import {Logo} from '../logo/logo.tsx';
+import {AppRoute, AuthorizationStatus} from '../../consts.ts';
+import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
+import {useEffect} from 'react';
+import {changePromoFavoriteStatus, fetchFavoriteFilms} from '../../store/api-actions.ts';
+import {setMyListCount} from '../../store/actions.ts';
+import './promo-film.css';
+import {FilmType} from '../../types/types.ts';
 
 type PromoFilmProps = {
   promoFilm: FilmType;
 }
 
 export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
-  const films = useAppSelector(getFilms);
+  const authStatus = useAppSelector(getAuthStatus);
+  const myListCount = useAppSelector(getMyListCount);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteFilms());
+    }
+  }, [authStatus, dispatch]);
+
+  const handleClick = () => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(changePromoFavoriteStatus({filmId: promoFilm.id, status: +(!promoFilm.isFavorite)}));
+      if (promoFilm?.isFavorite) {
+        dispatch(setMyListCount(myListCount - 1));
+      } else {
+        dispatch(setMyListCount(myListCount + 1));
+      }
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
 
   return (
     <section className="film-card">
@@ -32,7 +60,7 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
           <div className="film-card__poster">
             <img className="film-card__poster--image-item"
               src={promoFilm.posterImage}
-              alt={`${promoFilm.name} poster`} width="218" height="327"
+              alt={`${promoFilm.name} poster`}
             />
           </div>
 
@@ -50,13 +78,16 @@ export default function PromoFilm({promoFilm}: PromoFilmProps): JSX.Element {
                 </svg>
                 <span>Play</span>
               </Link>
-              <Link to={'mylist'} className="btn btn--list film-card__button" type="button">
-                <svg className="btn--list__icon-ite" viewBox="0 0 19 20">
-                  <use xlinkHref="#add"></use>
+              <button
+                className="btn btn--list film-card__button"
+                onClick={handleClick}
+              >
+                <svg viewBox="0 0 18 14" width="19" height="14">
+                  <use xlinkHref={promoFilm?.isFavorite ? '#in-list' : '#add'} />
                 </svg>
                 <span>My list</span>
-                <span className="film-card__count">{films.length}</span>
-              </Link>
+                { authStatus === AuthorizationStatus.Auth && (<span className="film-card__count">{myListCount}</span>) }
+              </button>
             </div>
           </div>
         </div>
