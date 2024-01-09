@@ -53,10 +53,10 @@ function MoviePage(): JSX.Element {
   const addHandler = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm.isFavorite) }));
-      if (mainFilm?.isFavorite) {
-        dispatch(setMyListCount(myListCount - 1));
-      } else {
+      if (!mainFilm?.isFavorite) {
         dispatch(setMyListCount(myListCount + 1));
+      } else {
+        dispatch(setMyListCount(myListCount - 1));
       }
     } else {
       navigate(AppRoute.Login);
