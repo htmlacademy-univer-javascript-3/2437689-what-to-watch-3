@@ -1,4 +1,4 @@
-import { Genres } from '../utils/consts.ts';
+import { Genres } from '../consts.ts';
 
 export type FilmType = {
   id: string;

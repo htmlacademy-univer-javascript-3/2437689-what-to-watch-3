@@ -1,5 +1,5 @@
-import {Review} from '../../types/films';
-import UserReview from './user-review';
+import {Review} from '../../../types/films.ts';
+import UserReview from '../../user-review/user-review.tsx';
 
 type TabReviewsProps = {
   reviews: Review[];

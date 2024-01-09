@@ -1,5 +1,5 @@
 import {FilmType} from '../../types/films';
-import {hoverFilmCardTime} from '../../utils/consts.ts';
+import {hoverFilmCardTime} from '../../consts.ts';
 import {Link} from 'react-router-dom';
 import './film-card.css';
 import {VideoPlayer} from '../video-player/video-player.tsx';

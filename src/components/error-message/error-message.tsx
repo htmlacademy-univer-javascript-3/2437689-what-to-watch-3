@@ -1,9 +1,10 @@
 import {useAppDispatch, useAppSelector} from '../hooks/hooks.ts';
 import {setError} from '../../store/actions.ts';
 import './error-message.css';
+import {getError} from '../../store/main-reducer/selectors.ts';
 
 export default function ErrorMessage() {
-  const error = useAppSelector((state) => state.error);
+  const error = useAppSelector(getError);
   const dispatch = useAppDispatch();
 
   return error ? (

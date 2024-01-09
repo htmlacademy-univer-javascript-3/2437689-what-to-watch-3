@@ -1,5 +1,6 @@
-import {Genres} from '../../utils/consts.ts';
+import {Genres} from '../../consts.ts';
 import {useAppSelector} from '../hooks/hooks.ts';
+import {getGenre} from '../../store/films-reducer/selectors.ts';
 
 type GenreItemProps = {
   genre: Genres;
@@ -7,7 +8,7 @@ type GenreItemProps = {
 };
 
 export default function GenreItem({genre, onClick}: GenreItemProps): JSX.Element {
-  const activeGenre = useAppSelector((state) => state.genre);
+  const activeGenre = useAppSelector(getGenre);
 
   return (
     <li

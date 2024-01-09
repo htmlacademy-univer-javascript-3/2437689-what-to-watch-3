@@ -1,10 +1,11 @@
 import {useState} from 'react';
 import {Review} from '../../types/films';
-import {TabType, tabTypes} from '../../utils/consts.ts';
-import TabOverview from './tab-overview.tsx';
-import TabReviews from './tab-reviews.tsx';
+import {TabType, tabTypes} from '../../consts.ts';
+import TabOverview from './tab-overview/tab-overview.tsx';
+import TabReviews from './tab-reviews/tab-reviews.tsx';
 import {useAppSelector} from '../hooks/hooks.ts';
-import TabDetails from './tab-details.tsx';
+import TabDetails from './tab-details/tab-details.tsx';
+import {getReviews} from '../../store/film-reducer/selectors.ts';
 
 function GetTabComponent(tab: TabType, reviews: Review[]): JSX.Element {
   switch (tab) {
@@ -18,7 +19,7 @@ function GetTabComponent(tab: TabType, reviews: Review[]): JSX.Element {
 }
 export function Tabs(): JSX.Element {
   const [tab, setTab] = useState<TabType>(TabType.Overview);
-  const reviews = useAppSelector((state) => state.reviews);
+  const reviews = useAppSelector(getReviews);
   return (
     <div className="film-card__desc">
       <nav className="film-nav film-card__nav">

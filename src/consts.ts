@@ -2,19 +2,6 @@ export const hoverFilmCardTime = 1000;
 export const visibleFilmCardCount = 8;
 export const showErrorTimeout = 2000;
 
-/*export const APIRoute = {
-  Films: () => '/films',
-  Film: (filmId: string) => `/films/${filmId}`,
-  Similar: () => '/similar',
-  Promo: () => '/promo',
-  Favorite: () => '/favorite',
-  Reviews: ()  => '/comments',
-  Login: () => '/login',
-  Logout: () => '/logout',
-  AddReview: () => '/films/:id/review',
-  MyList: () => '/mylist',
-};*/
-
 export enum APIRoute {
   Films = '/films',
   Login = '/login',
@@ -80,3 +67,10 @@ export const genres: Genres[] = [
   Genres.SciFi,
   Genres.Thriller,
 ];
+
+export enum ReducerName {
+  USER = 'USER',
+  FILM = 'FILM',
+  FILMS = 'FILMS',
+  MAIN = 'MAIN',
+}

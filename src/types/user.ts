@@ -2,10 +2,5 @@ export type UserData = {
   id: number;
   email: string;
   token: string;
+  avatar: string;
 };
-
-export type UserReview = {
-  filmId: string;
-  rating: number;
-  comment: string;
-}

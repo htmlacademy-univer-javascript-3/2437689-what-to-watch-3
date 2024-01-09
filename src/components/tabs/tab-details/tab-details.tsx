@@ -1,8 +1,9 @@
 import React from 'react';
-import {useAppSelector} from '../hooks/hooks.ts';
+import {useAppSelector} from '../../hooks/hooks.ts';
+import {getFilm} from '../../../store/film-reducer/selectors.ts';
 
 function TabDetails(): JSX.Element {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

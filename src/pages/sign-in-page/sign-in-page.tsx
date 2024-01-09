@@ -1,8 +1,11 @@
-import {AppRoute, AuthorizationStatus} from '../../utils/consts.ts';
+import {AppRoute, AuthorizationStatus} from '../../consts.ts';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
-import {FormEvent, useRef} from 'react';
-import {loginAction} from '../../services/api-actions';
+import {FormEvent, useRef, useState} from 'react';
+import {login} from '../../store/api-actions.ts';
+import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
+import {AuthData} from '../../types/auth.ts';
+import Message from '../../components/message/message.tsx';
 
 export type UserFormValues = {
   email: string;
@@ -14,20 +17,47 @@ function SignInPage(): JSX.Element {
   const navigate = useNavigate();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const [errorMessage, setError] = useState<string | null>(null);
+  const authorizationStatus = useAppSelector(getAuthStatus);
+
+  const signInValidator = (data: { email: string; password: string }) => {
+    const isEmailValid = /^\S+@\S+\.\S+$/.test(data.email);
+    const isPasswordValid = /^(?=^[a-zA-Z0-9]{2,}$)(?=.*\d)(?=.*[a-zA-Z]).*$/.test(data.password);
+
+    if (!isPasswordValid) {
+      return 'We can’t recognize this email and password combination. Please try again.';
+    }
+
+    if (!isEmailValid) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
+  };
+  const onSubmit = (authData: AuthData) => {
+    dispatch(login(authData));
+  };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(
+      /*dispatch(
         loginAction({
-          login: loginRef.current.value,
+          email: loginRef.current.value,
           password: passwordRef.current.value,
         })
-      );
+      );*/
+
+      const data = {
+        email: loginRef.current.value,
+        password: passwordRef.current.value,
+      };
+      const currentError = signInValidator(data);
+      setError(currentError);
+      if (currentError === null) {
+        onSubmit(data);
+      }
     }
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Main);
@@ -47,6 +77,7 @@ function SignInPage(): JSX.Element {
       </header>
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
+          {errorMessage !== null && <Message message={errorMessage}/>}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input

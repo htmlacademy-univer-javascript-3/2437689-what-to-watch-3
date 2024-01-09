@@ -6,18 +6,15 @@ import MoviePage from '../../pages/movie-page/movie-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import PlayerPage from '../../pages/player-page/player-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import {AppRoute} from '../../utils/consts.ts';
+import {AppRoute} from '../../consts.ts';
 import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../hooks/hooks.ts';
 import Spinner from '../spinner/spinner.tsx';
 import { HelmetProvider } from 'react-helmet-async';
+import {getLoadedDataStatusFilms} from '../../store/films-reducer/selectors.ts';
 
 function App(): JSX.Element {
-  const isQuestionsDataLoading = useAppSelector(
-    (state) => state.isFilmsDataLoading
-  );
-  const films = useAppSelector((state) => state.films);
-  const promoFilm = useAppSelector((state) => state.promoFilm);
+  const isQuestionsDataLoading = useAppSelector(getLoadedDataStatusFilms);
   if (isQuestionsDataLoading) {
     return <Spinner />;
   }
@@ -27,7 +24,7 @@ function App(): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage promoFilm={promoFilm} />}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Login}
@@ -37,7 +34,7 @@ function App(): JSX.Element {
             path={AppRoute.MyList}
             element={
               <PrivateRoute>
-                <MyListPage films={films} />
+                <MyListPage />
               </PrivateRoute>
             }
           />
@@ -48,7 +45,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.AddReview}
             element={
-              <AddReviewPage film={promoFilm}/>
+              <AddReviewPage/>
             }
           />
           <Route
