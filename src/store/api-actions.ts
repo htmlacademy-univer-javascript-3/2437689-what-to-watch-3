@@ -91,8 +91,8 @@ export const fetchPromoFilm = createAsyncThunk<
 );
 
 export const changePromoFavoriteStatus = createAsyncThunk<FilmType, { filmId: string; status: number }, {
-    state: State;
-    extra: AxiosInstance;
+  state: State;
+  extra: AxiosInstance;
 }>(
   'MAIN/changePromoFavoriteStatus',
   async ({ filmId: id, status: isFavorite }, { extra: api }) => {
@@ -180,4 +180,34 @@ export const postReview = createAsyncThunk<
     });
     return data;
   }
+);
+
+export const addFilmToFavorites = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'FILMS/add_favorite',
+  async (id, {dispatch, extra: api}) => {
+    await api.post(`${APIRoute.Favorite}/${id}/1`, {}).then(() => {
+      dispatch(fetchFavoriteFilms());
+      dispatch(fetchPromoFilm());
+      dispatch(fetchFilm(id));
+      dispatch(setError(null));
+    });
+  },
+);
+
+export const removeFilmFromFavorites = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'FILMS/remove_favorite',
+  async (id, {dispatch, extra: api}) => {
+    await api.post(`${APIRoute.Favorite}/${id}/0`, {});
+    dispatch(fetchFavoriteFilms());
+    dispatch(fetchPromoFilm());
+    dispatch(fetchFilm(id));
+  },
 );

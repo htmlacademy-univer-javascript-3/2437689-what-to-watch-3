@@ -1,73 +1,64 @@
 import {FilmCards} from '../../components/film-cards/film-cards.tsx';
-import {AppRoute, AuthorizationStatus} from '../../consts.ts';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {AuthorizationStatus} from '../../consts.ts';
+import {Link, useParams} from 'react-router-dom';
 import {Tabs} from '../../components/tabs/tabs';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks';
-import {
-  changeFilmFavoriteStatus,
-  fetchFavoriteFilms,
-  fetchFilm,
-  fetchReviews,
-  fetchSimilarFilms
-} from '../../store/api-actions.ts';
+import {fetchFavoriteFilms, fetchFilm, fetchReviews, fetchSimilarFilms} from '../../store/api-actions.ts';
 import {useEffect} from 'react';
 import {NotFoundPage} from '../not-found-page/not-found-page';
 import './movie-page.css';
 import UserBlock from '../../components/user-block/user-block.tsx';
-import {getFilm, getIsDataLoadingFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
+import {getFilm, getSimilarFilms} from '../../store/film-reducer/selectors.ts';
 import {getAuthStatus} from '../../store/user-reducer/selectors.ts';
 import Footer from '../../components/footer/footer.tsx';
 import {Logo} from '../../components/logo/logo.tsx';
-import {getMyListCount} from '../../store/films-reducer/selectors.ts';
-import Spinner from '../../components/spinner/spinner.tsx';
-import {setMyListCount} from '../../store/actions.ts';
+import NoAuthMyListButton from '../../components/no-auth-my-list-button/no-auth-my-list-button.tsx';
+import AddInMyListButton from '../../components/add-in-my-list-button/add-in-my-list-button.tsx';
+import DeleteFromMyListButton from '../../components/delete-from-my-list-button/delete-from-my-list-button.tsx';
 
 function MoviePage(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const mainFilm = useAppSelector(getFilm);
   const filmsLikeMain = useAppSelector(getSimilarFilms);
   const authorizationStatus = useAppSelector(getAuthStatus);
-  const isFilmDataLoading = useAppSelector(getIsDataLoadingFilm);
-  const myListCount = useAppSelector(getMyListCount);
 
   useEffect(() => {
+    if (id === undefined) {
+      return;
+    }
+
     dispatch(fetchFilm(String(id)));
     dispatch(fetchSimilarFilms(String(id)));
     dispatch(fetchReviews(String(id)));
+  }, [id, dispatch]);
 
+  useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoriteFilms());
     }
-  }, [id, dispatch, authorizationStatus]);
+  }, [authorizationStatus, dispatch]);
 
-  if (isFilmDataLoading) {
-    return <Spinner />;
-  }
-
-  if (!mainFilm) {
+  if (mainFilm === null) {
     return <NotFoundPage />;
   }
 
-  const addHandler = () => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      dispatch(changeFilmFavoriteStatus({ filmId: mainFilm.id, status: +(!mainFilm.isFavorite) }));
-      if (!mainFilm?.isFavorite) {
-        dispatch(setMyListCount(myListCount + 1));
-      } else {
-        dispatch(setMyListCount(myListCount - 1));
-      }
-    } else {
-      navigate(AppRoute.Login);
-    }
-  };
+  let myListButton;
+
+  if (authorizationStatus === AuthorizationStatus.NoAuth) {
+    myListButton = <NoAuthMyListButton />;
+  } else {
+    myListButton = mainFilm.isFavorite
+      ? <DeleteFromMyListButton id={mainFilm.id} />
+      : <AddInMyListButton id={mainFilm.id} />;
+  }
+
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={mainFilm?.backgroundImage} alt={mainFilm?.name} />
+            <img src={mainFilm.backgroundImage} alt={mainFilm.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -80,15 +71,15 @@ function MoviePage(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{mainFilm?.name}</h2>
+              <h2 className="film-card__title">{mainFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{mainFilm?.genre}</span>
-                <span className="film-card__year">{mainFilm?.released}</span>
+                <span className="film-card__genre">{mainFilm.genre}</span>
+                <span className="film-card__year">{mainFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
                 <Link
-                  to={`/player/${mainFilm?.id}`}
+                  to={`/player/${mainFilm.id}`}
                   className="btn btn--play film-card__button"
                   type="button"
                 >
@@ -97,16 +88,9 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <button
-                  className="btn btn--list film-card__button"
-                  onClick={addHandler}
-                >
-                  <svg viewBox="0 0 18 14" width="19" height="14">
-                    <use xlinkHref={mainFilm?.isFavorite ? '#in-list' : '#add'} />
-                  </svg>
-                  <span>My list</span>
-                  { authorizationStatus === AuthorizationStatus.Auth && (<span className="film-card__count">{myListCount}</span>) }
-                </button>
+
+                {myListButton}
+
                 <Link to={`/films/${mainFilm.id}/review`} className="btn film-card__button">
                   Add review
                 </Link>
@@ -120,8 +104,8 @@ function MoviePage(): JSX.Element {
             <div className="film-card__poster film-card__poster--big">
               <img
                 className="film-card__poster--image-item"
-                src={mainFilm?.posterImage}
-                alt={mainFilm?.name}
+                src={mainFilm.posterImage}
+                alt={mainFilm.name}
               />
             </div>
 

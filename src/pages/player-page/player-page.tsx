@@ -3,7 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../components/hooks/hooks.ts';
 import {useEffect, useRef, useState} from 'react';
 import {fetchFilm} from '../../store/api-actions.ts';
-import {getFilm} from '../../store/film-reducer/selectors.ts';
+import {getFilm, getIsDataLoadingFilm} from '../../store/film-reducer/selectors.ts';
 import {Helmet} from 'react-helmet-async';
 import Spinner from '../../components/spinner/spinner.tsx';
 
@@ -13,6 +13,7 @@ function PlayerPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const film = useAppSelector(getFilm);
+  const isDataLoading = useAppSelector(getIsDataLoadingFilm);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -70,6 +71,10 @@ function PlayerPage(): JSX.Element {
 
   function onTimeUpdateVideo(): void {
     setCurrentTime(getFilmCurrentTime());
+  }
+
+  if (isDataLoading) {
+    return <Spinner />;
   }
 
   return film ? (
