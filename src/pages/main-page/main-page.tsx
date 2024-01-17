@@ -1,21 +1,18 @@
 import {FilmCards} from '../../components/film-cards/film-cards.tsx';
+import {JSX} from 'react';
 import './main-page.css';
 import {useAppSelector} from '../../components/hooks/hooks.ts';
 import {GenresList} from '../../components/genre-list/genre-list.tsx';
-import PromoFilm from '../../components/promo-film/promo-film.tsx';
+import {PromoFilm} from '../../components/promo-film/promo-film.tsx';
 import ShowMoreButton from '../../components/show-more-button/show-more-button.tsx';
 import {getFilmsByGenre, getFilmsCount} from '../../store/films-reducer/selectors.ts';
-import {getIsDataLoadingPromo, getPromo} from '../../store/main-reducer/selectors.ts';
-import Spinner from '../../components/spinner/spinner.tsx';
+import {getPromo} from '../../store/main-reducer/selectors.ts';
 
-function MainPage(): JSX.Element {
+export function MainPage(): JSX.Element {
   const filmCount = useAppSelector(getFilmsCount);
   const filmsByGenres = useAppSelector(getFilmsByGenre);
   const promoFilm = useAppSelector(getPromo);
-  const isDataLoadingPromo = useAppSelector(getIsDataLoadingPromo);
-  if (isDataLoadingPromo) {
-    return <Spinner/>;
-  }
+
   return (
     <>
       {promoFilm && <PromoFilm promoFilm={promoFilm} />}
@@ -50,5 +47,3 @@ function MainPage(): JSX.Element {
     </>
   );
 }
-
-export default MainPage;

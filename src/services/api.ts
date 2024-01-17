@@ -1,24 +1,18 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token.ts';
 import {errorHandle} from './error-handler.ts';
+import {StatusCodes} from 'http-status-codes';
 
 const BASE_URL = 'https://13.design.pages.academy/wtw';
 const TIMEOUT = 5000;
 
-type DetailMessage = {
-  type: string;
-  message: string;
-};
-
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true,
+  [StatusCodes.NOT_FOUND]: true
 };
 
-const shouldDisplayError = (response: AxiosResponse) =>
-  !!StatusCodeMapping[response.status];
+const shouldDisplayError = (response: AxiosResponse) => StatusCodeMapping[response.status];
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -36,10 +30,9 @@ export const createAPI = (): AxiosInstance => {
   });
   api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<DetailMessage>) => {
-      if (error.response && error.response.data && shouldDisplayError(error.response)) {
-        const detailMessage = error.response.data;
-        errorHandle(detailMessage.message);
+    (error: AxiosError<{error: string}>) => {
+      if (error.response && shouldDisplayError(error.response)) {
+        errorHandle(error.response.data.error);
       }
 
       throw error;
